@@ -18,9 +18,17 @@ class NoteController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.notes.index');
     }
 
+    public function getList()
+    {
+        $notes = Note::with('user')->orderBy('id', 'DESC')->get();
+        //dd($notes);
+        return response()->json(
+            $notes->toArray()
+        );
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -62,7 +70,7 @@ class NoteController extends Controller
                 {
                     return response()->json([
                         'success'   => true,
-                        'message'   => 'La nota <b>' . $nota->nombre . '</b> se creó con exito!',
+                        'message'   => 'La nota <b>' . $note->nombre . '</b> se creó con exito!',
                         'note'      => $note->toArray()
                     ]);
                 }

@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('admin.index');
 });
 
 // Authentication routes...
@@ -60,3 +60,4 @@ Route::resource('admin', 'AdminController');
 Route::resource('users', 'UsersController');
 // Notes
 Route::resource('notes', 'NoteController');
+Route::get('note', 'NoteController@getList');
