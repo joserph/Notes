@@ -1,54 +1,40 @@
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+  	<div class="container-fluid">
+	    <!-- Brand and toggle get grouped for better mobile display -->
+	    <div class="navbar-header">
+	      	<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+		        <span class="sr-only">Toggle navigation</span>
+		        <span class="icon-bar"></span>
+		        <span class="icon-bar"></span>
+		        <span class="icon-bar"></span>
+		    </button>
+	      	<a class="navbar-brand" href="/">App Notes</a>
+	    </div>
 
-<!-- Dropdown Structure -->
-<ul id="dropdown1" class="dropdown-content">
-  	@if (Auth::guest())
-	@else		
-		<li><a href="/logout">Logout</a></li>			
-	@endif
-</ul>
-<ul id="dropdown2" class="dropdown-content">
-  	@if (Auth::guest())
-	@else		
-		<li><a href="/logout">Logout</a></li>			
-	@endif
-</ul>
-<nav>
-  	<div class="nav-wrapper cyan">
-      	<a href="/" class="brand-logo">App Notes</a>
-      	<a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
-  		<ul class="right hide-on-med-and-down">
-	        @if (Auth::guest())
-			@else
-				@if(Auth::user()->role == 'admin' || Auth::user()->role == 'editor')
-					<li><a href="{{ route('users.index') }}">Usuarios</a></li>
+	    <!-- Collect the nav links, forms, and other content for toggling -->
+	    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+	      	<ul class="nav navbar-nav">  
+	        	@if (Auth::guest())
+				@else
+					@if(Auth::user()->role == 'admin' || Auth::user()->role == 'editor')
+						<li><a href="{{ route('users.index') }}">Usuarios</a></li>
+					@endif
+				@endif     
+	     	</ul>
+	      	
+	      	<ul class="nav navbar-nav navbar-right">
+	      		@if (Auth::guest())
+					<li><a href="{{ route('login') }}">Iniciar sesión</a></li>
+					<li><a href="{{ route('register') }}">Registrar</a></li>
+				@else
+			      	<li class="dropdown">
+		          		<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ Auth::user()->name }} <span class="caret"></span></a>
+			          	<ul class="dropdown-menu">
+				            <li><a href="/logout">Logout</a></li>
+			          	</ul>
+		        	</li>
 				@endif
-			@endif
-	      	@if (Auth::guest())
-				<li><a href="{{ route('login') }}">Iniciar sesión</a></li>
-				<li><a href="{{ route('register') }}">Registrar</a></li>
-			@else
-				<!-- Dropdown Trigger -->
-		      	<li>
-		      		<a class="dropdown-button" href="#!" data-activates="dropdown1">{{ Auth::user()->name }}<i class="material-icons right">arrow_drop_down</i></a>
-		      	</li>
-			@endif	   
-  		</ul>
-  		<ul class="side-nav" id="mobile-demo">
-	        @if (Auth::guest())
-			@else
-				@if(Auth::user()->role == 'admin' || Auth::user()->role == 'editor')
-					<li><a href="{{ route('users.index') }}">Usuarios</a></li>
-				@endif
-			@endif
-	      	@if (Auth::guest())
-				<li><a href="{{ route('login') }}">Iniciar sesión</a></li>
-				<li><a href="{{ route('register') }}">Registrar</a></li>
-			@else
-				<!-- Dropdown Trigger -->
-		      	<li>
-		      		<a class="dropdown-button" href="#!" data-activates="dropdown2">{{ Auth::user()->name }}<i class="material-icons right">arrow_drop_down</i></a>
-		      	</li>
-			@endif	   
-  		</ul>
-    </div>
+	      	</ul>
+	    </div><!-- /.navbar-collapse -->
+  	</div><!-- /.container-fluid -->
 </nav>

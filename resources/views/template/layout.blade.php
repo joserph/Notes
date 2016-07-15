@@ -6,9 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 	<title>@yield('title', 'App Notes')</title>
 
-    <link rel="stylesheet" href="{{ asset('css/materialize.css') }}">
-    <!--Import Google Icon Font-->
-    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/simplex-bootstrap.css') }}">
+   
     <link rel="stylesheet" href="{{ asset('font-awesome/css/font-awesome.min.css') }}">
 
 
@@ -29,12 +28,7 @@
 	</div>
 	<!-- Scripts -->
 	<script src="{{ asset('js/jquery.min.js') }}"></script>
-	<script src="{{ asset('js/materialize.min.js') }}"></script>
-	<script>
-		$( document ).ready(function(){
-			$(".button-collapse").sideNav();
-		})
-	</script>
+	<script src="{{ asset('js/bootstrap.min.js') }}"></script>
 	@yield('scripts')
 </body>
 </html>
