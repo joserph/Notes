@@ -9,6 +9,7 @@
         <li class="active">Panel de administración</li>
     </ol>
     <div class="row">
+        <!-- Notes -->
         <div class="col-lg-3 col-md-6">
             <div class="panel panel-info">
                 <div class="panel-heading">
@@ -27,6 +28,34 @@
                     </div>
                 </div>
                 <a href="{{ route('notes.index') }}">
+                    <div class="panel-footer">
+                        <span class="pull-left">Ver Detalles</span>
+                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- Activities -->
+        <div class="col-lg-3 col-md-6">
+            <div class="panel panel-warning">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-3">                            
+                            <i class="fa fa-puzzle-piece fa-5x"></i>                                                       
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            <div class="huge numeroPanel">{{ $countActivities }}</div>
+                            @if($countActivities > 1)
+                                <div>Actividades!</div>
+                            @else
+                                <div>Actividad!</div>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+                <a href="{{ route('activities.index') }}">
                     <div class="panel-footer">
                         <span class="pull-left">Ver Detalles</span>
                         <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>

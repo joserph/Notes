@@ -7,9 +7,9 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Validator;
-use App\Note;
+use App\Activity;
 
-class NoteController extends Controller
+class ActivitiesController extends Controller
 {
     public function __construct()
     {
@@ -23,17 +23,17 @@ class NoteController extends Controller
      */
     public function index()
     {
-        return view('admin.notes.index');
+        return view('admin.activities.index');
     }
 
     public function getList()
     {
-        $notes = Note::with('user')->orderBy('id', 'DESC')->get();
-        //dd($notes);
+        $activities = Activity::with('user')->orderBy('id', 'DESC')->get();
         return response()->json(
-            $notes->toArray()
+            $activities->toArray()
         );
     }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -41,7 +41,7 @@ class NoteController extends Controller
      */
     public function create()
     {
-        return view('admin.notes.create');
+        return view('admin.activities.create');
     }
 
     /**
@@ -58,7 +58,7 @@ class NoteController extends Controller
             $validator = Validator::make($request->all(), [
                 'nombre'    => 'required',
                 'contenido' => 'required',
-                'fecha'     => 'required'
+                'tipo'      => 'required'
             ]);
 
             if($validator->fails())
@@ -68,15 +68,15 @@ class NoteController extends Controller
                     'errors'    => $validator->getMessageBag()->toArray()
                 ]);
             }else{
-                $note = new Note($request->all());
-                $note->save();
+                $activity = new Activity($request->all());
+                $activity->save();
 
-                if($note)
+                if($activity)
                 {
                     return response()->json([
                         'success'   => true,
-                        'message'   => 'La nota <b>' . $note->nombre . '</b> se creó con exito!',
-                        'note'      => $note->toArray()
+                        'message'   => 'La actividad <b>' . $activity->nombre . '</b> se creó con exito!',
+                        'activity'  => $activity->toArray()
                     ]);
                 }
             }
@@ -102,9 +102,9 @@ class NoteController extends Controller
      */
     public function edit($id)
     {
-        $note = Note::find($id);
+        $activity = Activity::find($id);
         return response()->json(
-            $note->toArray()
+            $activity->toArray()
         );
     }
 
@@ -117,15 +117,14 @@ class NoteController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $note = Note::find($id);
-        $note->fill($request->all());
-        $note->save();
-
+        $activity = Activity::find($id);
+        $activity->fill($request->all());
+        $activity->save();
         return response()->json([
             'success'   => true,
-            'message'   => 'La nota <b>' . $note->nombre . '</b> se actualizó con exito!'
+            'message'   => 'La actividad <b>' . $activity->nombre . '</b> se actualizó con exito!'
         ]);
-    }   
+    }
 
     /**
      * Remove the specified resource from storage.
@@ -135,12 +134,11 @@ class NoteController extends Controller
      */
     public function destroy($id)
     {
-        $note = Note::find($id);
-        $note->delete();
-
+        $activity = Activity::find($id);
+        $activity->delete();
         return response()->json([
             'success'   => true,
-            'message'   => 'La nota <b>' . $note->nombre . '</b> se eliminó con exito!'
+            'message'   => 'La actividad <b>' . $activity->nombre . '</b> se eliminó con exito!'
         ]);
     }
 }

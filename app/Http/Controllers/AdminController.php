@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\User;
 use App\Note;
+use App\Activity;
 
 class AdminController extends Controller
 {
@@ -24,9 +25,11 @@ class AdminController extends Controller
     public function index()
     {
         $countNotes = Note::count();
+        $countActivities = Activity::count();
         //dd($countNotes);
         return view('admin.index')
-            ->with('countNotes', $countNotes);
+            ->with('countNotes', $countNotes)
+            ->with('countActivities', $countActivities);
     }
 
     /**

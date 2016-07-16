@@ -61,3 +61,6 @@ Route::resource('users', 'UsersController');
 // Notes
 Route::resource('notes', 'NoteController');
 Route::get('note', 'NoteController@getList');
+// Activities
+Route::resource('activities', 'ActivitiesController');
+Route::resource('activity', 'ActivitiesController@getList');

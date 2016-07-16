@@ -48,6 +48,52 @@ $(document).ready(function()
 	});
 	ListNotes();
 	// End Notes
+
+	// Activities
+	var formActivity = $('.add-activity');
+	formActivity.on('submit', function()
+	{
+		$.ajax({
+			type: formActivity.attr('method'),
+			url: formActivity.attr('action'),
+			data: formActivity.serialize(),
+			success: function(data)
+			{
+				$('.error').html('');
+				$('.success').hide().html('');
+				if(data.success == false)
+				{
+					var errors = '';
+						errors += '<div class="alert alert-warning">';
+						errors += '<button type="button" class="close" data-dismiss="alert">&times;</button>';
+						errors += '<h4><i class="fa fa-exclamation-triangle fa-fw"></i> Por favor corrige los siguentes errores:</h4>';
+					for(datos in data.errors)
+					{
+						errors += '<li>' + data.errors[datos] + '</li>'
+					}
+						errors += '</div>';
+					$('.error').html(errors);
+				}else{
+					var successMessage = '';
+						successMessage += '<div class="alert alert-success">';
+						successMessage += '<button type="button" class="close" data-dismiss="alert">&times;</button>';
+						successMessage += '<p><i class="fa fa-check fa-fw"></i>' + data.message + '</p>';
+						successMessage += '</div>';
+					$(formActivity)[0].reset();								
+					$('#myModal').modal('hide');
+					ListActivities();
+					$('.success').show().html(successMessage);
+				}
+			},
+			error: function(errors)
+			{
+				$('.error').html(errors);
+			}
+		});
+		return false;
+	});
+	ListActivities();
+	//E End Activities
 	
 });
 
@@ -94,6 +140,47 @@ function ListNotes()
 	});	
 }
 // End Notes
+
+// Activities
+function ListActivities()
+{
+	var divActivities = $('#listActivities');
+	var route = 'http://notes.dev/activity';
+	$('#listActivities').empty();
+	$.get(route, function(respuesta)
+	{
+		$(respuesta).each(function(key, value)
+		{
+			var panel = '';
+				panel += '<div class="col-lg-3 col-md-6 white-panel">';
+				panel += '<div class="panel panel-default ">';
+				panel += '<div class="panel-heading">';
+				panel += '<div class="row">';
+				panel += '<div class="col-xs-12 text-center">';
+				panel += '<h3>'+ value.nombre +'</h3>';
+				panel += '</div>';
+				panel += '</div>';
+				panel += '</div>';
+				panel += '<div class="panel-body">';
+				panel += '<p>'+ value.contenido +'</p>';
+				panel += '</div>';
+				panel += '<div class="panel-footer">';
+				panel += '<span class="pull-left">';
+				panel += '<button value='+ value.id +' onclick="ShowNote(this);" data-toggle="modal" data-target="#myModal2" class="btn btn-warning"><i class="fa fa-pencil-square fa-fw"></i></button>';
+				panel += '</span>';
+				panel += '<span class="pull-right">';
+				panel += '<button value='+ value.id +' onclick="ShowNoteDelete(this);" data-toggle="modal" data-target="#myModal3" class="btn btn-danger"><i class="fa fa-trash fa-fw"></i></button>';
+				panel += '</span>';
+				panel += '<div class="clearfix"></div>';
+				panel += '</div>';
+				panel += '</div>';
+				panel += '</div>';
+
+			divActivities.append(panel);	
+		});
+	});	
+}
+// End Activities
 
 /*
  *	*************** EDIT ***************
