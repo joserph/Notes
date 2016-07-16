@@ -5,7 +5,7 @@
 	{!! Form::label('nombre', 'Nombre') !!}
 	<div class="row">
 		<div class="col-md-12">
-			{!! Form::text('nombre', null, ['class' => 'form-control', 'placeholder' => 'Nombre de la nota']) !!}
+			{!! Form::text('nombre', null, ['class' => 'form-control', 'id' => 'myInput', 'placeholder' => 'Nombre de la nota']) !!}
 		</div>
 	</div>
 	{!! Form::label('contenido', 'Contenido') !!}

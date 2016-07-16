@@ -98,9 +98,9 @@ class NoteController extends Controller
     public function edit($id)
     {
         $note = Note::find($id);
-        return response()->json([
+        return response()->json(
             $note->toArray()
-        ]);
+        );
     }
 
     /**
@@ -135,7 +135,7 @@ class NoteController extends Controller
 
         return response()->json([
             'success'   => true,
-            'message'   => 'La nota <b>' . $nota->nombre . '</b> se eliminó con exito!'
+            'message'   => 'La nota <b>' . $note->nombre . '</b> se eliminó con exito!'
         ]);
     }
 }
