@@ -44,7 +44,7 @@
                     <h4 class="modal-title" id="myModalLabel"><i class="fa fa-pencil-square fa-fw"></i> Editar nota</h4>
                 </div>
                 <div class="modal-body">
-                    @include('admin.notes.edit')
+                    @include('admin.activities.edit')
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
@@ -62,7 +62,7 @@
                     <h4 class="modal-title" id="myModalLabel"><i class="fa fa-pencil-square fa-fw"></i> Eliminar nota</h4>
                 </div>
                 <div class="modal-body">
-                    @include('admin.notes.delete')
+                    @include('admin.activities.delete')
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>

@@ -120,6 +120,7 @@ class ActivitiesController extends Controller
         $activity = Activity::find($id);
         $activity->fill($request->all());
         $activity->save();
+
         return response()->json([
             'success'   => true,
             'message'   => 'La actividad <b>' . $activity->nombre . '</b> se actualizó con exito!'
@@ -136,6 +137,7 @@ class ActivitiesController extends Controller
     {
         $activity = Activity::find($id);
         $activity->delete();
+        
         return response()->json([
             'success'   => true,
             'message'   => 'La actividad <b>' . $activity->nombre . '</b> se eliminó con exito!'

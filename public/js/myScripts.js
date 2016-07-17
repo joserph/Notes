@@ -121,7 +121,7 @@ function ListNotes()
 				panel += '</div>';
 				panel += '</div>';
 				panel += '<div class="panel-body">';
-				panel += '<p>'+ value.contenido +'</p>';
+				panel += '<p class="text-justify">'+ value.contenido +'</p>';
 				panel += '</div>';
 				panel += '<div class="panel-footer">';
 				panel += '<span class="pull-left">';
@@ -161,15 +161,15 @@ function ListActivities()
 				panel += '</div>';
 				panel += '</div>';
 				panel += '</div>';
-				panel += '<div class="panel-body">';
-				panel += '<p>'+ value.contenido +'</p>';
+				panel += '<div class="panel-body">'; 
+				panel += '<p class="text-justify">'+ value.contenido +'</p>';
 				panel += '</div>';
 				panel += '<div class="panel-footer">';
 				panel += '<span class="pull-left">';
-				panel += '<button value='+ value.id +' onclick="ShowNote(this);" data-toggle="modal" data-target="#myModal2" class="btn btn-warning"><i class="fa fa-pencil-square fa-fw"></i></button>';
+				panel += '<button value='+ value.id +' onclick="ShowActivity(this);" data-toggle="modal" data-target="#myModal2" class="btn btn-warning"><i class="fa fa-pencil-square fa-fw"></i></button>';
 				panel += '</span>';
 				panel += '<span class="pull-right">';
-				panel += '<button value='+ value.id +' onclick="ShowNoteDelete(this);" data-toggle="modal" data-target="#myModal3" class="btn btn-danger"><i class="fa fa-trash fa-fw"></i></button>';
+				panel += '<button value='+ value.id +' onclick="ShowActivityDelete(this);" data-toggle="modal" data-target="#myModal3" class="btn btn-danger"><i class="fa fa-trash fa-fw"></i></button>';
 				panel += '</span>';
 				panel += '<div class="clearfix"></div>';
 				panel += '</div>';
@@ -232,6 +232,55 @@ $('#edit-note').click(function()
 	})
 });
 //End Notes
+// Activities
+function ShowActivity(boton)
+{
+	var route = 'http://notes.dev/activities/'+ boton.value +'/edit';
+	$.get(route, function(respuesta)
+	{
+		$('#nombreEdit').val(respuesta.nombre);
+		$('#contenidoEdit').val(respuesta.contenido);
+		$('#tipoEdit').val(respuesta.tipo);
+		$('#fechaEdit').val(respuesta.fecha);
+		$('#id').val(respuesta.id);
+	});
+}
+$('#edit-activity').click(function()
+{
+	var id = $('#id').val();
+	var nombre = $('#nombreEdit').val();
+	var contenido = $('#contenidoEdit').val();
+	var tipo = $('#tipoEdit').val();
+	var fecha = $('#fechaEdit').val();
+	var updateUser = $('#updateUser').val();
+	var route = 'http://notes.dev/activities/'+id+'';
+	var token = $('#token').val();
+
+	$.ajax({
+		url: route,
+		headers: {'X-CSRF-TOKEN': token},
+		type: 'PUT',
+		dataType: 'json',
+		data: {nombre: nombre, contenido: contenido, tipo:tipo, fecha: fecha, update_user: updateUser},
+		success: function(data)
+		{
+			if(data.success == false)
+			{
+				console.log("Error");
+			}else{
+				var successMessage = '';
+				successMessage += '<div class="alert alert-warning">';
+				successMessage += '<button type="button" class="close" data-dismiss="alert">&times;</button>';
+				successMessage += '<p><i class="fa fa-check fa-fw"></i>' + data.message + '</p>';
+				successMessage += '</div>';
+				ListActivities();
+				$('#myModal2').modal('hide');
+				$('.success').show().html(successMessage);
+			}
+		}
+	})
+});
+// End Activities
 
 /*
  *	*************** DELETE ***************
@@ -276,3 +325,43 @@ $('#delete-note').click(function()
 	});
 });
 // End Notes
+// Activities
+function ShowActivityDelete(boton)
+{
+	var route = 'http://notes.dev/activities/'+ boton.value + '/edit';
+	$.get(route, function(respuesta)
+	{
+		$('#nombreDelete').val(respuesta.nombre);
+		$('#id').val(respuesta.id);
+	});
+}
+$('#delete-activity').click(function()
+{
+	var id = $('#id').val();	
+	var route = 'http://notes.dev/activities/'+id+'';
+	var token = $('#token').val();
+
+	$.ajax({
+		url: route,
+		headers: {'X-CSRF-TOKEN': token},
+		type: 'DELETE',
+		dataType: 'json',
+		success: function(data)
+		{
+			if(data.success == false)
+			{
+				console.log("Error");
+			}else{
+				var successMessage = '';
+				successMessage += '<div class="alert alert-danger">';
+				successMessage += '<button type="button" class="close" data-dismiss="alert">&times;</button>';
+				successMessage += '<p><i class="fa fa-check fa-fw"></i>' + data.message + '</p>';
+				successMessage += '</div>';
+				ListActivities();
+				$('#myModal3').modal('hide');
+				$('.success').show().html(successMessage);
+			}
+		}
+	});
+});
+
