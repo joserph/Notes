@@ -57,8 +57,7 @@ class NoteController extends Controller
         {
             $validator = Validator::make($request->all(), [
                 'nombre'    => 'required',
-                'contenido' => 'required',
-                'fecha'     => 'required'
+                'contenido' => 'required'
             ]);
 
             if($validator->fails())

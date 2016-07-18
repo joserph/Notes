@@ -17,7 +17,6 @@ class CreateNotesTable extends Migration
 
             $table->string('nombre');
             $table->string('contenido');
-            $table->date('fecha');
             $table->integer('id_user')->unsigned();
             $table->foreign('id_user')
                 ->references('id')

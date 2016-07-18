@@ -110,6 +110,8 @@ function ListNotes()
 	{
 		$(respuesta).each(function(key, value)
 		{
+			var created_at = value.created_at;
+			var creado = moment(created_at).locale('es').fromNow();
 			var panel = '';
 				panel += '<div class="col-lg-3 col-md-6 white-panel">';
 				panel += '<div class="panel panel-default ">';
@@ -122,6 +124,9 @@ function ListNotes()
 				panel += '</div>';
 				panel += '<div class="panel-body">';
 				panel += '<p class="text-justify">'+ value.contenido +'</p>';
+				panel += '</div>';
+				panel += '<div class="panel-footer text-center CCD6D9">';
+				panel += '<p><i class="fa fa-clock-o fa-fw"></i> '+ creado +'</p>';
 				panel += '</div>';
 				panel += '<div class="panel-footer">';
 				panel += '<span class="pull-left">';
@@ -151,6 +156,10 @@ function ListActivities()
 	{
 		$(respuesta).each(function(key, value)
 		{
+			var created_at = value.created_at;
+			var creado = moment(created_at).locale('es').fromNow();
+			var fecha = value.fecha;
+			var dateActivity = moment(fecha).locale('es').format('L');
 			var panel = '';
 				panel += '<div class="col-lg-3 col-md-6 white-panel">';
 				panel += '<div class="panel panel-default ">';
@@ -163,6 +172,13 @@ function ListActivities()
 				panel += '</div>';
 				panel += '<div class="panel-body">'; 
 				panel += '<p class="text-justify">'+ value.contenido +'</p>';
+				if(value.tipo == 'fija'){
+					panel += '<span class="pull-left label label-success text-uppercase">'+ value.tipo +'</span>';
+					panel += '<span class="pull-right label label-default"><i class="fa fa-calendar"></i> '+ dateActivity +'</span>';
+				}else{
+					panel += '<span class="pull-left label label-warning text-uppercase">'+ value.tipo +'</span>';
+					panel += '<span class="pull-right label label-default"><i class="fa fa-calendar"></i> '+ dateActivity +'</span>';
+				}
 				panel += '</div>';
 				panel += '<div class="panel-footer">';
 				panel += '<span class="pull-left">';
@@ -193,7 +209,6 @@ function ShowNote(boton)
 	{
 		$('#nombreEdit').val(respuesta.nombre);
 		$('#contenidoEdit').val(respuesta.contenido);
-		$('#fechaEdit').val(respuesta.fecha);
 		$('#id').val(respuesta.id);
 	});
 }
@@ -202,7 +217,6 @@ $('#edit-note').click(function()
 	var id = $('#id').val();
 	var nombre = $('#nombreEdit').val();
 	var contenido = $('#contenidoEdit').val();
-	var fecha = $('#fechaEdit').val();
 	var updateUser = $('#updateUser').val();
 	var route = 'http://notes.dev/notes/'+id+'';
 	var token = $('#token').val();

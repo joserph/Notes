@@ -29,6 +29,8 @@
 	<!-- Scripts -->
 	<script src="{{ asset('js/jquery.min.js') }}"></script>
 	<script src="{{ asset('js/bootstrap.min.js') }}"></script>
+	<script src="{{ asset('plugins/moment/moment.min.js') }}"></script>
+	<script src="{{ asset('plugins/moment/moment-with-locales.min.js') }}"></script>
 	@yield('scripts')
 </body>
 </html>
