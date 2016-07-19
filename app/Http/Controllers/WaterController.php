@@ -18,7 +18,7 @@ class WaterController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.water.index');
     }
 
     /**
@@ -40,7 +40,7 @@ class WaterController extends Controller
     public function store(Request $request)
     {
         date_default_timezone_set('America/Caracas');
-        if(\Request::ajax()
+        if(\Request::ajax())
         {
             $validator = Validator::make($request->all());
 
@@ -63,7 +63,7 @@ class WaterController extends Controller
                     ]);
                 }
             }
-        });
+        }
     }
 
     /**
