@@ -125,9 +125,9 @@ function ListNotes()
 				panel += '<div class="panel-body">';
 				panel += '<p class="text-justify">'+ value.contenido +'</p>';
 				panel += '</div>';
-				panel += '<div class="panel-footer text-center CCD6D9">';
-				panel += '<p><i class="fa fa-clock-o fa-fw"></i> '+ creado +'</p>';
-				panel += '</div>';
+				//panel += '<div class="panel-footer text-center CCD6D9">';
+				panel += '<pre class="text-center"><i class="fa fa-clock-o fa-fw"></i> '+ creado +'</pre>';
+				//panel += '</div>';
 				panel += '<div class="panel-footer">';
 				panel += '<span class="pull-left">';
 				panel += '<button value='+ value.id +' onclick="ShowNote(this);" data-toggle="modal" data-target="#myModal2" class="btn btn-warning"><i class="fa fa-pencil-square fa-fw"></i></button>';

@@ -13,6 +13,8 @@
         <li><a href="{{ route('admin.index') }}">Panel de administración</a></li>
         <li class="active">Water</li>
     </ol>
+
+    <pre>ng-app="string"</pre>
     <!-- Panels notes -->
 	<div class="row" id="listWater">
         
