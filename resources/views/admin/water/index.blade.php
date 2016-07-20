@@ -15,9 +15,10 @@
     </ol>
 
     <!-- Panels notes -->
-	<div class="row" id="listWater">
-        
-    </div>
+	
+    <ul class="list-group" id="listWater">
+  
+    </ul>
     <!-- Modal Add-->
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">

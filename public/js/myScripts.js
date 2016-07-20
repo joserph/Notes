@@ -247,47 +247,65 @@ function ListActivities()
 function ListWater()
 {
 	var divWater = $('#listWater');
-	var route = 'http://notes.dev/water';
+	var route = 'http://notes.dev/wate';
 	$('#listWater').empty();
 	$.get(route, function(respuesta)
 	{
 		$(respuesta).each(function(key, value)
 		{
-			var created_at = value.created_at;
-			var creado = moment(created_at).locale('es').fromNow();
-			var fecha = value.fecha;
-			var dateActivity = moment(fecha).locale('es').format('L');
+			var fecha_pago = value.fecha_pago;
+			var pago = moment(fecha_pago).locale('es').endOf(fecha_pago).fromNow();
+			var periodo = value.periodo;
+			var mes = moment(periodo).locale('es').format('MMMM');
+			// PARA DAR FORMATO A LA MONEDA
+			var formatNumber = {
+			 	separador: ".", // separador para los miles
+			 	sepDecimal: ',', // separador para los decimales
+			 	formatear:function (num)
+			 	{
+				 	num +='';
+				 	var splitStr = num.split('.');
+				 	var splitLeft = splitStr[0];
+				 	var splitRight = splitStr.length > 1 ? this.sepDecimal + splitStr[1] : '';
+				 	var regx = /(\d+)(\d{3})/;
+			 		while (regx.test(splitLeft))
+			 		{
+			 			splitLeft = splitLeft.replace(regx, '$1' + this.separador + '$2');
+			 		}
+			 		return this.simbol + splitLeft +splitRight;
+			 	},
+		 		new:function(num, simbol)
+		 		{
+		 			this.simbol = simbol ||'';
+		 			return this.formatear(num);
+		 		}
+			}
 			var panel = '';
-				panel += '<div class="col-lg-3 col-md-6 white-panel">';
-				panel += '<div class="panel panel-default ">';
-				panel += '<div class="panel-heading">';
-				panel += '<div class="row">';
-				panel += '<div class="col-xs-12 text-center">';
-				panel += '<h3>'+ value.periodo +'</h3>';
-				panel += '</div>';
-				panel += '</div>';
-				panel += '</div>';
-				panel += '<div class="panel-body">'; 
-				panel += '<p class="text-justify">'+ value.pagado_por +'</p>';
-				if(value.estatus == 'pago'){
-					panel += '<span class="pull-left label label-success text-uppercase">'+ value.estatus +'</span>';
-					panel += '<span class="pull-right label label-default"><i class="fa fa-calendar"></i> '+ dateActivity +'</span>';
+				if(value.estatus == 'pago')
+				{
+					panel += '<li class="list-group-item list-group-item-success">';
+					panel += '<span class="badge">';
+					panel += 'Se pago '+ pago +' ';					
+					panel += '</span>';
+					panel += '<h4 class="text-uppercase">'+ mes +'</h4>';
+					panel += '<p>Pagado por <em><b>'+ value.pagado_por +'</b></em></p>';
+					panel += '<p>Monto: <kbd>'+ formatNumber.new(value.monto) +'</kbd></p>';
+					panel += '<button value='+ value.id +' onclick="ShowActivity(this);" data-toggle="modal" data-target="#myModal2" class="btn btn-warning"><i class="fa fa-pencil-square fa-fw"></i></button> ';
+					panel += ' <button value='+ value.id +' onclick="ShowActivityDelete(this);" data-toggle="modal" data-target="#myModal3" class="btn btn-danger"><i class="fa fa-trash fa-fw"></i></button>';		
+					panel += '</li>';
+				}else if(value.estatus == 'vencido')
+				{
+					panel += '<li class="list-group-item panel-primary">';
+					panel += '<span class="badge"> Pagar antes del '+ pago +'</span>';
+					panel +=  '<span class="text-uppercase">'+ mes +'</span>';
+					panel += '</li>';
 				}else{
-					panel += '<span class="pull-left label label-warning text-uppercase">'+ value.estatus +'</span>';
-					panel += '<span class="pull-right label label-default"><i class="fa fa-calendar"></i> '+ dateActivity +'</span>';
+					panel += '<li class="list-group-item panel-danger">';
+					panel += '<span class="badge danger"> Vence '+ pago +'</span>';
+					panel +=  '<span class="text-uppercase">'+ mes +'</span>';
+					panel += '</li>';
 				}
-				panel += '</div>';
-				panel += '<div class="panel-footer">';
-				panel += '<span class="pull-left">';
-				panel += '<button value='+ value.id +' onclick="ShowActivity(this);" data-toggle="modal" data-target="#myModal2" class="btn btn-warning"><i class="fa fa-pencil-square fa-fw"></i></button>';
-				panel += '</span>';
-				panel += '<span class="pull-right">';
-				panel += '<button value='+ value.id +' onclick="ShowActivityDelete(this);" data-toggle="modal" data-target="#myModal3" class="btn btn-danger"><i class="fa fa-trash fa-fw"></i></button>';
-				panel += '</span>';
-				panel += '<div class="clearfix"></div>';
-				panel += '</div>';
-				panel += '</div>';
-				panel += '</div>';
+				
 
 			divWater.append(panel);	
 		});

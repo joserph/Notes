@@ -4,14 +4,14 @@
  	{!! Form::hidden('update_user', Auth::user()->id) !!}
  	{!! Form::label('periodo', 'Periodo') !!}
  	<div class="row">
- 		<div class="col-md-4">
- 			{!! Form::selectMonth('periodo', null, ['class' => 'form-control', 'id' => 'myInput', 'placeholder' => 'mm-yyyy']) !!}
+ 		<div class="col-md-6">
+ 			<input type="month" name="periodo" class="form-control" placeholder="mm-yyyy" id="myInput">
  		</div>
  	</div>
  	{!! Form::label('estatus', 'Estatus') !!}
  	<div class="row">
 		<div class="col-md-4">
-			{!! Form::select('size', [
+			{!! Form::select('estatus', [
 				'pago' 		=> 'Pago', 
 				'por pagar'	=> 'Por pagar',
 				'vencido'	=> 'Vencido'], null, ['class' => 'form-control', 'placeholder' => 'Seleccione estatus']) !!}

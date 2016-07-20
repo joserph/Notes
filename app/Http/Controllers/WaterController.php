@@ -21,6 +21,14 @@ class WaterController extends Controller
         return view('admin.water.index');
     }
 
+    public function getList()
+    {
+        $waters = Water::with('user')->orderBy('id', 'DESC')->get();
+        return response()->json(
+            $waters->toArray()
+        );
+    }
+
     /**
      * Show the form for creating a new resource.
      *
