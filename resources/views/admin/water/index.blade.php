@@ -4,7 +4,7 @@
 
 @section('content')
 	<div class="success"></div>
-	<h2 class="page-header"><i class="fa fa-sticky-note fa-fw"></i> 
+	<h2 class="page-header"><i class="fa fa-tint fa-fw"></i> 
 		Water
 		<button type="button" class="pull-right btn btn-success" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus-circle fa-fw"></i></button>
 	</h2>
@@ -14,7 +14,6 @@
         <li class="active">Water</li>
     </ol>
 
-    <pre>ng-app="string"</pre>
     <!-- Panels notes -->
 	<div class="row" id="listWater">
         
@@ -28,7 +27,7 @@
                     <h4 class="modal-title" id="myModalLabel"><i class="fa fa-plus-circle fa-fw"></i> Crear nota</h4>
                 </div>
                 <div class="modal-body">
-                    @include('admin.notes.create')
+                    @include('admin.water.create')
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>

@@ -42,7 +42,10 @@ class WaterController extends Controller
         date_default_timezone_set('America/Caracas');
         if(\Request::ajax())
         {
-            $validator = Validator::make($request->all());
+            $validator = Validator::make($request->all(), [
+                'periodo'   => 'required',
+                'estatus'   => 'required'
+            ]);
 
             if($validator->fails())
             {
