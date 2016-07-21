@@ -72,8 +72,8 @@
     </div>
 	
     @section('scripts')
-		<script src="{{ asset('js/myScripts.js') }}"></script>
         <script src="{{ asset('js/pinterest_grid.js') }}"></script>
+        <script src="{{ asset('js/modules/scriptsActivity.js') }}"></script>
         <script>
             $('#myModal').on('shown.bs.modal', function () {
                 $('#myInput').focus()

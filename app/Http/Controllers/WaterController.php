@@ -51,7 +51,7 @@ class WaterController extends Controller
         if(\Request::ajax())
         {
             $validator = Validator::make($request->all(), [
-                'periodo'   => 'required',
+                'periodo'   => 'required|unique:waters',
                 'estatus'   => 'required'
             ]);
 
@@ -64,12 +64,13 @@ class WaterController extends Controller
             }else{
                 $water = new Water($request->all());
                 $water->save();
+                $periodo = date('m-Y', strtotime($water->periodo));
 
                 if($water)
                 {
                     return response()->json([
                         'success'   => true,
-                        'message'   => 'El gasto por agua del periodo <b>' . $water->periodo . '</b> se creó con exito!',
+                        'message'   => 'El gasto por agua del periodo <b>' . $periodo . '</b> se creó con exito!',
                         'water'     => $water->toArray()
                     ]);
                 }
@@ -115,10 +116,11 @@ class WaterController extends Controller
         $water = Water::find($id);
         $water->fill($request->all());
         $water->save();
+        $periodo = date('m-Y', strtotime($water->periodo));
 
         return response()->json([
             'success'   => true,
-            'message'   => 'El gasto por agua del periodo <b>' . $water->periodo . '</b> se actualizó con exito!'
+            'message'   => 'El gasto por agua del periodo <b>' . $periodo . '</b> se actualizó con exito!'
         ]);
     }
 
@@ -131,11 +133,12 @@ class WaterController extends Controller
     public function destroy($id)
     {
         $water = Water::find($id);
-        $water->delete;
+        $water->delete();
+        $periodo = date('m-Y', strtotime($water->periodo));
 
         return response()->json([
             'success'   => true,
-            'message'   => 'El gasto por agua del periodo <b>' . $water->periodo . '</b> se eliminó con exito!'
+            'message'   => 'El gasto por agua del periodo <b>' . $periodo . '</b> se eliminó con exito!'
         ]);
     }
 }
