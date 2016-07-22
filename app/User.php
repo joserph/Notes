@@ -51,4 +51,9 @@ class User extends Model implements AuthenticatableContract,
     {
         return $this->hasMany('App\Water', 'id_user');
     }
+
+    public function lights()
+    {
+        return $this->hasMany('App\Light', 'id_user');
+    }
 }

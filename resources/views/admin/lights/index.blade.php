@@ -1,17 +1,17 @@
 @extends('template.layout')
 
-@section('title') Pagos agua | App notes @stop
+@section('title') Pagos luz | App notes @stop
 
 @section('content')
 	<div class="success"></div>
 	<h2 class="page-header"><i class="fa fa-tint fa-fw"></i> 
-		Pagos agua
+		Pagos luz
 		<button type="button" class="pull-right btn btn-success" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus-circle fa-fw"></i></button>
 	</h2>
     <ol class="breadcrumb">
         <li><a href="/">Inicio</a></li>
         <li><a href="{{ route('admin.index') }}">Panel de administración</a></li>
-        <li class="active">Pagos agua</li>
+        <li class="active">Pagos luz</li>
     </ol>
 
     <!-- Panels notes -->
@@ -21,7 +21,7 @@
                 <h3 class="panel-title">Año {{ $anioActual }} <span class="pull-right"><button class="btn btn-info btn-xs">Total pagado <i class="fa fa-arrow-right"></i> {{ number_format($totalMontoActual,2,",",".") }}</button></span></h3>
             </div>
             <div class="panel-body">
-                <ul class="list-group" id="listWater">
+                <ul class="list-group" id="listLight">
       
                 </ul>
             </div>
@@ -33,10 +33,10 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel"><i class="fa fa-plus-circle fa-fw"></i> Crear pago agua</h4>
+                    <h4 class="modal-title" id="myModalLabel"><i class="fa fa-plus-circle fa-fw"></i> Crear pago luz</h4>
                 </div>
                 <div class="modal-body">
-                    @include('admin.water.create')
+                    @include('admin.lights.create')
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
@@ -51,10 +51,10 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel"><i class="fa fa-pencil-square fa-fw"></i> Editar pago agua</h4>
+                    <h4 class="modal-title" id="myModalLabel"><i class="fa fa-pencil-square fa-fw"></i> Editar pago luz</h4>
                 </div>
                 <div class="modal-body">
-                    @include('admin.water.edit')
+                    @include('admin.lights.edit')
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
@@ -69,10 +69,10 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel"><i class="fa fa-trash fa-fw"></i> Eliminar pago agua</h4>
+                    <h4 class="modal-title" id="myModalLabel"><i class="fa fa-trash fa-fw"></i> Eliminar pago luz</h4>
                 </div>
                 <div class="modal-body">
-                    @include('admin.water.delete')
+                    @include('admin.lights.delete')
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
@@ -83,7 +83,7 @@
 	
     @section('scripts')		
         <script src="{{ asset('js/pinterest_grid.js') }}"></script>
-        <script src="{{ asset('js/modules/scriptsWater.js') }}"></script>
+        <script src="{{ asset('js/modules/scriptsLight.js') }}"></script>
         <script>
             $('#myModal').on('shown.bs.modal', function () {
                 $('#myInput').focus()

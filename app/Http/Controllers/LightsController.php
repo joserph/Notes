@@ -7,9 +7,9 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Validator;
-use App\Water;
+use App\Light;
 
-class WaterController extends Controller
+class LightsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -22,22 +22,19 @@ class WaterController extends Controller
         $anioActual = date('Y');
         $periodo = $anioActual.'-'.$enero;
         //$waters = Water::with('user')->where('periodo', '>=', $periodo)->orderBy('id', 'DESC')->get();
-        $totalMontoActual = Water::where('periodo', '>=', $periodo)->sum('monto');
+        $totalMontoActual = Light::where('periodo', '>=', $periodo)->sum('monto');
         //dd($totalMontoActual);
-        return view('admin.water.index')
+        return view('admin.lights.index')
             ->with('anioActual', $anioActual)
             ->with('totalMontoActual', $totalMontoActual);
     }
 
     public function getList()
     {
-        $enero = '01';
-        $anioActual = date('Y');
-        $periodo = $anioActual.'-'.$enero;
-        $waters = Water::with('user')->where('periodo', '>=', $periodo)->orderBy('id', 'DESC')->get();
-        
+        $lights = Light::orderBy('id', 'DESC')->get();
+
         return response()->json(
-            $waters->toArray()
+            $lights->toArray()
         );
     }
 
@@ -48,7 +45,7 @@ class WaterController extends Controller
      */
     public function create()
     {
-        return view('admin.water.create');
+        return view('admin.lights.create');
     }
 
     /**
@@ -59,11 +56,10 @@ class WaterController extends Controller
      */
     public function store(Request $request)
     {
-        date_default_timezone_set('America/Caracas');
         if(\Request::ajax())
         {
             $validator = Validator::make($request->all(), [
-                'periodo'   => 'required|unique:waters',
+                'periodo'   => 'required|unique:lights',
                 'estatus'   => 'required'
             ]);
 
@@ -74,16 +70,16 @@ class WaterController extends Controller
                     'errors'    => $validator->getMessageBag()->toArray()
                 ]);
             }else{
-                $water = new Water($request->all());
-                $water->save();
-                $periodo = date('m-Y', strtotime($water->periodo));
+                $light = new Light($request->all());
+                $light->save();
+                $periodo = date('m-Y', strtotime($light->periodo));
 
-                if($water)
+                if($light)
                 {
                     return response()->json([
                         'success'   => true,
                         'message'   => 'El gasto por agua del periodo <b>' . $periodo . '</b> se creó con exito!',
-                        'water'     => $water->toArray()
+                        'light'     => $light->toArray()
                     ]);
                 }
             }
@@ -109,10 +105,9 @@ class WaterController extends Controller
      */
     public function edit($id)
     {
-        $water = Water::find($id);
-
+        $light = Light::find($id);
         return response()->json(
-            $water->toArray()
+            $light->toArray()
         );
     }
 
@@ -125,10 +120,10 @@ class WaterController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $water = Water::find($id);
-        $water->fill($request->all());
-        $water->save();
-        $periodo = date('m-Y', strtotime($water->periodo));
+        $light = Light::find($id);
+        $light->fill($request->all());
+        $light->save();
+        $periodo = date('m-Y', strtotime($light->periodo));
 
         return response()->json([
             'success'   => true,
@@ -144,9 +139,9 @@ class WaterController extends Controller
      */
     public function destroy($id)
     {
-        $water = Water::find($id);
-        $water->delete();
-        $periodo = date('m-Y', strtotime($water->periodo));
+        $light = Light::find($id);
+        $light->delete();
+        $periodo = date('m-Y', strtotime($light->periodo));
 
         return response()->json([
             'success'   => true,
