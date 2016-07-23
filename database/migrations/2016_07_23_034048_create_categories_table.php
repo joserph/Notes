@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateLightsTable extends Migration
+class CreateCategoriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,14 +12,10 @@ class CreateLightsTable extends Migration
      */
     public function up()
     {
-        Schema::create('lights', function (Blueprint $table) {
+        Schema::create('categories', function (Blueprint $table) {
             $table->increments('id');
 
-            $table->decimal('monto', 12, 2);
-            $table->enum('estatus', ['pago', 'por pagar', 'vencido']);
-            $table->string('pagado_por');
-            $table->string('periodo');
-            $table->date('fecha_pago');
+            $table->string('nombre');
             $table->integer('id_user')->unsigned();
             $table->foreign('id_user')
                 ->references('id')
@@ -37,6 +33,6 @@ class CreateLightsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('lights');
+        Schema::drop('categories');
     }
 }
