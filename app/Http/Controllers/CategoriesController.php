@@ -18,7 +18,15 @@ class CategoriesController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.categories.index');
+    }
+
+    public function getList()
+    {
+        $categories = Category::orderBy('id', 'DESC')->get();
+        return response()->json(
+            $categories->toArray()
+        );
     }
 
     /**
