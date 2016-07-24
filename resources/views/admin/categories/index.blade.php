@@ -4,7 +4,7 @@
 
 @section('content')
 	<div class="success"></div>
-	<h2 class="page-header"><i class="fa fa-sticky-note fa-fw"></i> 
+	<h2 class="page-header"><i class="fa fa-random fa-fw"></i> 
 		Categorias
 		<button type="button" class="pull-right btn btn-success" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus-circle fa-fw"></i></button>
 	</h2>
@@ -13,10 +13,19 @@
         <li><a href="{{ route('admin.index') }}">Panel de administración</a></li>
         <li class="active">Categorias</li>
     </ol>
-    <!-- Panels notes -->
-	<div class="row" id="listCategories">
-        
+   <!-- .table -->
+    <div class="table-responsive">
+        <table class="table table-striped table-hover table-responsive">
+            <tr>
+                <th class="text-center">Nombre</th>               
+                <th class="text-center">Acción</th>                
+            </tr>            
+            
+            <tbody id="tr-categories"></tbody>
+            
+        </table>
     </div>
+    <!-- /.table -->
     <!-- Modal Add-->
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
@@ -44,7 +53,7 @@
                     <h4 class="modal-title" id="myModalLabel"><i class="fa fa-pencil-square fa-fw"></i> Editar categoría</h4>
                 </div>
                 <div class="modal-body">
-                    @include('admin.notes.edit')
+                    @include('admin.categories.edit')
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
@@ -62,7 +71,7 @@
                     <h4 class="modal-title" id="myModalLabel"><i class="fa fa-trash fa-fw"></i> Eliminar categoría</h4>
                 </div>
                 <div class="modal-body">
-                    @include('admin.notes.delete')
+                    @include('admin.categories.delete')
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>

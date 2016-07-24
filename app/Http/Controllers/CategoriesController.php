@@ -128,7 +128,7 @@ class CategoriesController extends Controller
     public function destroy($id)
     {
         $category = Category::find($id);
-        $category->save();
+        $category->delete();
 
         return response()->json([
             'success'   => true,

@@ -52,36 +52,114 @@ $(document).ready(function()
  */
 function ListCategories()
 {
-	var divCategory = $('#listCategories');
+	var divCategory = $('#tr-categories');
 	var route = 'http://notes.dev/category';
-	$('#listCategories').empty();
+	$('#tr-categories').empty();
 	$.get(route, function(respuesta)
 	{
 		$(respuesta).each(function(key, value)
 		{
 			var panel = '';
-				panel += '<div class="col-lg-3 col-md-6 white-panel">';
-				panel += '<div class="panel panel-default ">';
-				panel += '<div class="panel-heading">';
-				panel += '<div class="row">';
-				panel += '<div class="col-xs-12 text-center">';
-				panel += '<h3>'+ value.nombre +'</h3>';
-				panel += '</div>';
-				panel += '</div>';
-				panel += '</div>';
-				panel += '<div class="panel-footer">';
-				panel += '<span class="pull-left">';
-				panel += '<button value='+ value.id +' onclick="ShowActivity(this);" data-toggle="modal" data-target="#myModal2" class="btn btn-warning"><i class="fa fa-pencil-square fa-fw"></i></button>';
-				panel += '</span>';
-				panel += '<span class="pull-right">';
-				panel += '<button value='+ value.id +' onclick="ShowActivityDelete(this);" data-toggle="modal" data-target="#myModal3" class="btn btn-danger"><i class="fa fa-trash fa-fw"></i></button>';
-				panel += '</span>';
-				panel += '<div class="clearfix"></div>';
-				panel += '</div>';
-				panel += '</div>';
-				panel += '</div>';
+			 
+				panel += '<tr>';
+				panel += '<td class="text-center">'+ value.nombre +'</td>';
+				panel += '<td class="text-center">';
+				panel += '<button value='+ value.id +' onclick="ShowCategory(this);" data-toggle="modal" data-target="#myModal2" class="btn btn-warning">';
+				panel += '<i class="fa fa-pencil-square fa-fw"></i>';
+				panel += '</button> ';
+				panel += ' <button value='+ value.id +' onclick="ShowCategoryDelete(this);" data-toggle="modal" data-target="#myModal3" class="btn btn-danger">';
+				panel += '<i class="fa fa-trash fa-fw"></i>';
+				panel += '</button>';
+				panel += '</td>';
+				panel += '</tr>';
 
 			divCategory.append(panel);	
 		});
 	});	
 }
+/*
+ *	*************** EDIT ***************
+ */
+function ShowCategory(boton)
+{
+	var route = 'http://notes.dev/categories/'+ boton.value +'/edit';
+	$.get(route, function(respuesta)
+	{
+		$('#nombreEdit').val(respuesta.nombre);
+		$('#id').val(respuesta.id);
+	});
+}
+$('#edit-category').click(function()
+{
+	var id = $('#id').val();
+	var nombre = $('#nombreEdit').val();
+	var updateUser = $('#updateUser').val();
+	var route = 'http://notes.dev/categories/'+id+'';
+	var token = $('#token').val();
+
+	$.ajax({
+		url: route,
+		headers: {'X-CSRF-TOKEN': token},
+		type: 'PUT',
+		dataType: 'json',
+		data: {nombre: nombre, update_user: updateUser},
+		success: function(data)
+		{
+			if(data.success == false)
+			{
+				console.log("Error");
+			}else{
+				var successMessage = '';
+				successMessage += '<div class="alert alert-warning">';
+				successMessage += '<button type="button" class="close" data-dismiss="alert">&times;</button>';
+				successMessage += '<p><i class="fa fa-check fa-fw"></i>' + data.message + '</p>';
+				successMessage += '</div>';
+				ListCategories();
+				$('#myModal2').modal('hide');
+				$('.success').show().html(successMessage);
+			}
+		}
+	})
+});
+/*
+ *	*************** DELETE ***************
+ */
+function ShowCategoryDelete(boton)
+{
+	var route = 'http://notes.dev/categories/'+ boton.value + '/edit';
+	$.get(route, function(respuesta)
+	{
+		$('#nombreDelete').val(respuesta.nombre);
+		$('#id').val(respuesta.id);
+	});
+}
+$('#delete-category').click(function()
+{
+	var id = $('#id').val();	
+	var route = 'http://notes.dev/categories/'+id+'';
+	var token = $('#token').val();
+
+	$.ajax({
+		url: route,
+		headers: {'X-CSRF-TOKEN': token},
+		type: 'DELETE',
+		dataType: 'json',
+		success: function(data)
+		{
+			if(data.success == false)
+			{
+				console.log("Error");
+			}else{
+				var successMessage = '';
+				successMessage += '<div class="alert alert-danger">';
+				successMessage += '<button type="button" class="close" data-dismiss="alert">&times;</button>';
+				successMessage += '<p><i class="fa fa-check fa-fw"></i>' + data.message + '</p>';
+				successMessage += '</div>';
+				ListCategories();
+				$('#myModal3').modal('hide');
+				$('.success').show().html(successMessage);
+			}
+		}
+	});
+});
+
