@@ -47,11 +47,6 @@ class User extends Model implements AuthenticatableContract,
         return $this->hasMany('App\Activity', 'id_user');
     }
 
-    public function categories()
-    {
-        return $this->hasMany('App\Category', 'id_user');
-    }
-
     public function waters()
     {
         return $this->hasMany('App\Water', 'id_user');

@@ -28,13 +28,13 @@ class AdminController extends Controller
     {
         $countNotes = Note::count();
         $countActivities = Activity::count();
-        $countWater = Water::count();
+        $countWaters = Water::count();
         $countLights = Light::count();
         //dd($countNotes);
         return view('admin.index')
             ->with('countNotes', $countNotes)
             ->with('countActivities', $countActivities)
-            ->with('countWater', $countWater)
+            ->with('countWaters', $countWaters)
             ->with('countLights', $countLights);
     }
 

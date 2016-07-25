@@ -63,10 +63,7 @@ Route::resource('notes', 'NoteController');
 Route::get('note', 'NoteController@getList');
 // Activities
 Route::resource('activities', 'ActivitiesController');
-Route::resource('activity', 'ActivitiesController@getList');
-// Category
-Route::resource('categories', 'CategoriesController');
-Route::get('category', 'CategoriesController@getList');
+Route::get('activity', 'ActivitiesController@getList');
 // Water
 Route::resource('water', 'WaterController');
 Route::get('wate', 'WaterController@getList');

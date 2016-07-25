@@ -64,21 +64,21 @@
                 </a>
             </div>
         </div>
-
+        
         <!-- Water -->
         <div class="col-lg-3 col-md-6">
-            <div class="panel panel-success">
+            <div class="panel panel-danger">
                 <div class="panel-heading">
                     <div class="row">
                         <div class="col-xs-3">                            
                             <i class="fa fa-tint fa-5x"></i>                                                       
                         </div>
                         <div class="col-xs-9 text-right">
-                            <div class="huge numeroPanel">{{ $countWater }}</div>
-                            @if($countWater > 1)
-                                <div>Pagos agua!</div>
+                            <div class="huge numeroPanel">{{ $countWaters }}</div>
+                            @if($countWaters > 1)
+                                <div>pagos de agua!</div>
                             @else
-                                <div>Pago agua!</div>
+                                <div>pago de agua!</div>
                             @endif
                         </div>
                     </div>
@@ -93,20 +93,20 @@
             </div>
         </div>
 
-        <!-- Light -->
+        <!-- Water -->
         <div class="col-lg-3 col-md-6">
-            <div class="panel panel-danger">
+            <div class="panel panel-success">
                 <div class="panel-heading">
                     <div class="row">
                         <div class="col-xs-3">                            
-                            <i class="fa fa-light fa-5x"></i>                                                       
+                            <i class="fa fa-lightbulb-o fa-5x"></i>                                                       
                         </div>
                         <div class="col-xs-9 text-right">
                             <div class="huge numeroPanel">{{ $countLights }}</div>
                             @if($countLights > 1)
-                                <div>Pagos luz!</div>
+                                <div>pagos de luz!</div>
                             @else
-                                <div>Pago luz!</div>
+                                <div>pago de luz!</div>
                             @endif
                         </div>
                     </div>
@@ -119,7 +119,7 @@
                     </div>
                 </a>
             </div>
-        </div>
+        </div>      
         
     </div>
 
