@@ -56,32 +56,31 @@ class LightsController extends Controller
      */
     public function store(Request $request)
     {
-        if(\Request::ajax())
-        {
-            $validator = Validator::make($request->all(), [
-                'periodo'   => 'required|unique:lights',
-                'estatus'   => 'required'
-            ]);
+        date_default_timezone_set('America/Caracas');
+        
+        $validator = Validator::make($request->all(), [
+            'periodo'   => 'required|unique:lights',
+            'estatus'   => 'required'
+        ]);
 
-            if($validator->fails())
+        if($validator->fails())
+        {
+            return response()->json([
+                'success'   => false,
+                'errors'    => $validator->getMessageBag()->toArray()
+            ]);
+        }else{
+            $light = new Light($request->all());
+            $light->save();
+            $periodo = date('m-Y', strtotime($light->periodo));
+
+            if($light)
             {
                 return response()->json([
-                    'success'   => false,
-                    'errors'    => $validator->getMessageBag()->toArray()
+                    'success'   => true,
+                    'message'   => 'El gasto por agua del periodo <b>' . $periodo . '</b> se creó con exito!',
+                    'light'     => $light->toArray()
                 ]);
-            }else{
-                $light = new Light($request->all());
-                $light->save();
-                $periodo = date('m-Y', strtotime($light->periodo));
-
-                if($light)
-                {
-                    return response()->json([
-                        'success'   => true,
-                        'message'   => 'El gasto por agua del periodo <b>' . $periodo . '</b> se creó con exito!',
-                        'light'     => $light->toArray()
-                    ]);
-                }
             }
         }
     }

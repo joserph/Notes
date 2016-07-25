@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Phone extends Model
 {
-    protected $table = 'waters';
+    protected $table = 'phones';
 
     protected $fillable = ['monto', 'estatus', 'pagado_por', 'periodo', 'fecha_pago', 'id_user', 'update_user'];
 

@@ -53,33 +53,32 @@ class NoteController extends Controller
     public function store(Request $request)
     {
         date_default_timezone_set('America/Caracas');
-        if(\Request::ajax())
-        {
-            $validator = Validator::make($request->all(), [
-                'nombre'    => 'required',
-                'contenido' => 'required'
-            ]);
+        
+        $validator = Validator::make($request->all(), [
+            'nombre'    => 'required|unique:notes',
+            'contenido' => 'required'
+        ]);
 
-            if($validator->fails())
+        if($validator->fails())
+        {
+            return response()->json([
+                'success'   => false,
+                'errors'    => $validator->getMessageBag()->toArray()
+            ]);
+        }else{
+            $note = new Note($request->all());
+            $note->save();
+
+            if($note)
             {
                 return response()->json([
-                    'success'   => false,
-                    'errors'    => $validator->getMessageBag()->toArray()
+                    'success'   => true,
+                    'message'   => 'La nota <b>' . $note->nombre . '</b> se creó con exito!',
+                    'note'      => $note->toArray()
                 ]);
-            }else{
-                $note = new Note($request->all());
-                $note->save();
-
-                if($note)
-                {
-                    return response()->json([
-                        'success'   => true,
-                        'message'   => 'La nota <b>' . $note->nombre . '</b> se creó con exito!',
-                        'note'      => $note->toArray()
-                    ]);
-                }
             }
         }
+        
     }
 
     /**

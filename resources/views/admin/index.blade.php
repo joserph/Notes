@@ -93,7 +93,7 @@
             </div>
         </div>
 
-        <!-- Water -->
+        <!-- Light -->
         <div class="col-lg-3 col-md-6">
             <div class="panel panel-success">
                 <div class="panel-heading">

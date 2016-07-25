@@ -60,34 +60,32 @@ class WaterController extends Controller
     public function store(Request $request)
     {
         date_default_timezone_set('America/Caracas');
-        if(\Request::ajax())
-        {
-            $validator = Validator::make($request->all(), [
-                'periodo'   => 'required|unique:waters',
-                'estatus'   => 'required'
-            ]);
+        
+        $validator = Validator::make($request->all(), [
+            'periodo'   => 'required|unique:waters',
+            'estatus'   => 'required'
+        ]);
 
-            if($validator->fails())
+        if($validator->fails())
+        {
+            return response()->json([
+                'success'   => false,
+                'errors'    => $validator->getMessageBag()->toArray()
+            ]);
+        }else{
+            $water = new Water($request->all());
+            $water->save();
+            $periodo = date('m-Y', strtotime($water->periodo));
+
+            if($water)
             {
                 return response()->json([
-                    'success'   => false,
-                    'errors'    => $validator->getMessageBag()->toArray()
+                    'success'   => true,
+                    'message'   => 'El gasto por agua del periodo <b>' . $periodo . '</b> se creó con exito!',
+                    'water'     => $water->toArray()
                 ]);
-            }else{
-                $water = new Water($request->all());
-                $water->save();
-                $periodo = date('m-Y', strtotime($water->periodo));
-
-                if($water)
-                {
-                    return response()->json([
-                        'success'   => true,
-                        'message'   => 'El gasto por agua del periodo <b>' . $periodo . '</b> se creó con exito!',
-                        'water'     => $water->toArray()
-                    ]);
-                }
             }
-        }
+        }        
     }
 
     /**

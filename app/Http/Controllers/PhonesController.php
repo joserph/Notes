@@ -7,15 +7,10 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Validator;
-use App\Activity;
+use App\Phone;
 
-class ActivitiesController extends Controller
+class PhonesController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-        $this->middleware('editor');
-    }
     /**
      * Display a listing of the resource.
      *
@@ -23,14 +18,26 @@ class ActivitiesController extends Controller
      */
     public function index()
     {
-        return view('admin.activities.index');
+        $enero = '01';
+        $anioActual = date('Y');
+        $periodo = $anioActual.'-'.$enero;
+        //$waters = Water::with('user')->where('periodo', '>=', $periodo)->orderBy('id', 'DESC')->get();
+        $totalMontoActual = Phone::where('periodo', '>=', $periodo)->sum('monto');
+        //dd($totalMontoActual);
+        return view('admin.phones.index')
+            ->with('anioActual', $anioActual)
+            ->with('totalMontoActual', $totalMontoActual);
     }
 
     public function getList()
     {
-        $activities = Activity::with('user')->orderBy('id', 'DESC')->get();
+        $enero = '01';
+        $anioActual = date('Y');
+        $periodo = $anioActual.'-'.$enero;
+        $phones = Phone::with('user')->where('periodo', '>=', $periodo)->orderBy('id', 'DESC')->get();
+        
         return response()->json(
-            $activities->toArray()
+            $phones->toArray()
         );
     }
 
@@ -41,7 +48,7 @@ class ActivitiesController extends Controller
      */
     public function create()
     {
-        return view('admin.activities.create');
+        return view('admin.phones.create');
     }
 
     /**
@@ -55,9 +62,8 @@ class ActivitiesController extends Controller
         date_default_timezone_set('America/Caracas');
 
         $validator = Validator::make($request->all(), [
-            'nombre'    => 'required|unique:activities',
-            'contenido' => 'required',
-            'tipo'      => 'required'
+            'periodo'   => 'required|unique:phones',
+            'estatus'   => 'required'
         ]);
 
         if($validator->fails())
@@ -67,15 +73,15 @@ class ActivitiesController extends Controller
                 'errors'    => $validator->getMessageBag()->toArray()
             ]);
         }else{
-            $activity = new Activity($request->all());
-            $activity->save();
+            $phone = new Phone($request->all());
+            $phone->save();
+            $periodo = date('m-Y', strtotime($phone->periodo));
 
-            if($activity)
+            if($phone)
             {
                 return response()->json([
                     'success'   => true,
-                    'message'   => 'La actividad <b>' . $activity->nombre . '</b> se creó con exito!',
-                    'activity'  => $activity->toArray()
+                    'message'   => 'El gasto de teléfono del periodo <b>' . $periodo . '</b> se creó con exito!'
                 ]);
             }
         }
@@ -100,9 +106,9 @@ class ActivitiesController extends Controller
      */
     public function edit($id)
     {
-        $activity = Activity::find($id);
+        $phone = Phone::find($id);
         return response()->json(
-            $activity->toArray()
+            $phone->toArray()
         );
     }
 
@@ -115,13 +121,14 @@ class ActivitiesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $activity = Activity::find($id);
-        $activity->fill($request->all());
-        $activity->save();
+        $phone = Phone::find($id);
+        $phone->fill($request->all());
+        $phone->save();
+        $periodo = date('m-Y', strtotime($phone->periodo));
 
         return response()->json([
             'success'   => true,
-            'message'   => 'La actividad <b>' . $activity->nombre . '</b> se actualizó con exito!'
+            'message'   => 'El gasto de teléfono del periodo <b>' . $periodo . '</b> se actualizó con exito!'
         ]);
     }
 
@@ -133,12 +140,14 @@ class ActivitiesController extends Controller
      */
     public function destroy($id)
     {
-        $activity = Activity::find($id);
-        $activity->delete();
-        
+        $phone = Phone::find($id);
+        $phone->delete();
+        $periodo = date('m-Y', strtotime($phone->periodo));
+
         return response()->json([
             'success'   => true,
-            'message'   => 'La actividad <b>' . $activity->nombre . '</b> se eliminó con exito!'
+            'message'   => 'El gasto de teléfono del periodo <b>' . $periodo . '</b> se eliminó con exito!'
         ]);
+
     }
 }

@@ -70,3 +70,6 @@ Route::get('wate', 'WaterController@getList');
 // Light
 Route::resource('lights', 'LightsController');
 Route::get('light', 'LightsController@getList');
+// Phone
+Route::resource('phones', 'PhonesController');
+Route::get('phone', 'PhonesController@getList');
