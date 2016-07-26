@@ -53,10 +53,13 @@ $(document).ready(function()
 function ListWater()
 {
 	var divWater = $('#listWater');
+	var spanTotal = $('#total');
 	var route = 'http://notes.dev/wate';
 	$('#listWater').empty();
+	$('#total').empty();
 	$.get(route, function(respuesta)
 	{
+		var total = 0;
 		$(respuesta).each(function(key, value)
 		{
 			var fecha_pago = value.fecha_pago;
@@ -123,8 +126,11 @@ function ListWater()
 				panel += ' <button value='+ value.id +' onclick="ShowWaterDelete(this);" data-toggle="modal" data-target="#myModal3" class="btn btn-danger"><i class="fa fa-trash fa-fw"></i></button>';		
 				panel += '</li>';
 				divWater.append(panel);
-			}				
+			}
+			total = parseFloat(total) + parseFloat(value.monto);
+			sumaTotal = formatNumber.new(total);
 		});
+		spanTotal.append(sumaTotal);
 	});	
 }
 /*

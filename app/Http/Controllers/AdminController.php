@@ -11,6 +11,8 @@ use App\Note;
 use App\Activity;
 use App\Water;
 use App\Light;
+use App\Phone;
+use App\SocialSecurity;
 
 class AdminController extends Controller
 {
@@ -30,12 +32,16 @@ class AdminController extends Controller
         $countActivities = Activity::count();
         $countWaters = Water::count();
         $countLights = Light::count();
+        $countPhones = Phone::count();
+        $countSocialSecurities = SocialSecurity::count();
         //dd($countNotes);
         return view('admin.index')
             ->with('countNotes', $countNotes)
             ->with('countActivities', $countActivities)
             ->with('countWaters', $countWaters)
-            ->with('countLights', $countLights);
+            ->with('countLights', $countLights)
+            ->with('countPhones', $countPhones)
+            ->with('countSocialSecurities', $countSocialSecurities);
     }
 
     /**

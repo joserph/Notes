@@ -18,7 +18,7 @@
     <div class="col-md-6 col-md-offset-3">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title">Año {{ $anioActual }} <span class="pull-right"><button class="btn btn-info btn-xs">Total pagado <i class="fa fa-arrow-right"></i> {{ number_format($totalMontoActual,2,",",".") }}</button></span></h3>
+                <h3 class="panel-title">Año {{ $anioActual }} <span class="pull-right"><button class="btn btn-info btn-xs">Total pagado <i class="fa fa-arrow-right"></i> <span id="total"></span></button></span></h3>
             </div>
             <div class="panel-body">
                 <ul class="list-group" id="listWater">

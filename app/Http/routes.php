@@ -73,3 +73,6 @@ Route::get('light', 'LightsController@getList');
 // Phone
 Route::resource('phones', 'PhonesController');
 Route::get('phone', 'PhonesController@getList');
+// Social Security
+Route::resource('securities', 'SocialSecurityController');
+Route::get('security', 'SocialSecurityController@getList');

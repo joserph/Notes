@@ -4,7 +4,7 @@
 
 @section('content')
 	<div class="success"></div>
-	<h2 class="page-header"><i class="fa fa-tint fa-fw"></i> 
+	<h2 class="page-header"><i class="fa fa-phone fa-fw"></i> 
 		Pagos teléfono
 		<button type="button" class="pull-right btn btn-success" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus-circle fa-fw"></i></button>
 	</h2>
@@ -18,7 +18,7 @@
     <div class="col-md-6 col-md-offset-3">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title">Año {{ $anioActual }} <span class="pull-right"><button class="btn btn-info btn-xs">Total pagado <i class="fa fa-arrow-right"></i> {{ number_format($totalMontoActual,2,",",".") }}</button></span></h3>
+                <h3 class="panel-title">Año {{ $anioActual }} <span class="pull-right"><button class="btn btn-info btn-xs">Total pagado <i class="fa fa-arrow-right"></i> <span id="total"></span></button></span></h3>
             </div>
             <div class="panel-body">
                 <ul class="list-group" id="listPhones">

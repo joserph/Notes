@@ -76,9 +76,9 @@
                         <div class="col-xs-9 text-right">
                             <div class="huge numeroPanel">{{ $countWaters }}</div>
                             @if($countWaters > 1)
-                                <div>pagos de agua!</div>
+                                <div>Pagos de agua!</div>
                             @else
-                                <div>pago de agua!</div>
+                                <div>Pago de agua!</div>
                             @endif
                         </div>
                     </div>
@@ -104,9 +104,9 @@
                         <div class="col-xs-9 text-right">
                             <div class="huge numeroPanel">{{ $countLights }}</div>
                             @if($countLights > 1)
-                                <div>pagos de luz!</div>
+                                <div>Pagos de luz!</div>
                             @else
-                                <div>pago de luz!</div>
+                                <div>Pago de luz!</div>
                             @endif
                         </div>
                     </div>
@@ -119,7 +119,63 @@
                     </div>
                 </a>
             </div>
-        </div>      
+        </div>     
+
+        <!-- Phone -->
+        <div class="col-lg-3 col-md-6">
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-3">                            
+                            <i class="fa fa-phone fa-5x"></i>                                                       
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            <div class="huge numeroPanel">{{ $countPhones }}</div>
+                            @if($countPhones > 1)
+                                <div>Pagos de teléfono!</div>
+                            @else
+                                <div>Pago de teléfono!</div>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+                <a href="{{ route('phones.index') }}">
+                    <div class="panel-footer">
+                        <span class="pull-left">Ver Detalles</span>
+                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
+            </div>
+        </div>  
+
+        <!-- Phone -->
+        <div class="col-lg-3 col-md-6">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-3">                            
+                            <i class="fa fa-wheelchair fa-5x"></i>                                                       
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            <div class="huge numeroPanel">{{ $countSocialSecurities }}</div>
+                            @if($countSocialSecurities > 1)
+                                <div>Pagos de seguro social!</div>
+                            @else
+                                <div>Pago de seguro social!</div>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+                <a href="{{ route('securities.index') }}">
+                    <div class="panel-footer">
+                        <span class="pull-left">Ver Detalles</span>
+                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
+            </div>
+        </div>   
         
     </div>
 

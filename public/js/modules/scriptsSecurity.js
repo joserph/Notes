@@ -3,13 +3,13 @@
  */
 $(document).ready(function()
 {
-	var formLight = $('.add-light');
-	formLight.on('submit', function()
+	var formSso = $('.add-sso');
+	formSso.on('submit', function()
 	{
 		$.ajax({
-			type: formLight.attr('method'),
-			url: formLight.attr('action'),
-			data: formLight.serialize(),
+			type: formSso.attr('method'),
+			url: formSso.attr('action'),
+			data: formSso.serialize(),
 			success: function(data)
 			{
 				$('.error').html('');
@@ -32,9 +32,9 @@ $(document).ready(function()
 						successMessage += '<button type="button" class="close" data-dismiss="alert">&times;</button>';
 						successMessage += '<p><i class="fa fa-check fa-fw"></i>' + data.message + '</p>';
 						successMessage += '</div>';
-					$(formLight)[0].reset();								
+					$(formSso)[0].reset();								
 					$('#myModal').modal('hide');
-					ListLight();
+					ListSso();
 					$('.success').show().html(successMessage);
 				}
 			},
@@ -45,17 +45,17 @@ $(document).ready(function()
 		});
 		return false;
 	});
-	ListLight();
+	ListSso();
 });
 /*
  *	*************** LIST ***************
  */
-function ListLight()
+function ListSso()
 {
-	var divLight = $('#listLight');
+	var divSso = $('#listSso');
 	var spanTotal = $('#total');
-	var route = 'http://notes.dev/light';
-	$('#listLight').empty();
+	var route = 'http://notes.dev/security';
+	$('#listSso').empty();
 	$('#total').empty();
 	$.get(route, function(respuesta)
 	{
@@ -101,10 +101,10 @@ function ListLight()
 				panel += '<hr />';
 				panel += '<p>Pagado por <em><b>'+ value.pagado_por +'</b></em></p>';
 				panel += '<p>Monto: <kbd>'+ formatNumber.new(value.monto) +'</kbd></p>';
-				panel += '<button value='+ value.id +' onclick="ShowLight(this);" data-toggle="modal" data-target="#myModal2" class="btn btn-warning"><i class="fa fa-pencil-square fa-fw"></i></button> ';
-				panel += ' <button value='+ value.id +' onclick="ShowLightDelete(this);" data-toggle="modal" data-target="#myModal3" class="btn btn-danger"><i class="fa fa-trash fa-fw"></i></button>';		
+				panel += '<button value='+ value.id +' onclick="ShowSso(this);" data-toggle="modal" data-target="#myModal2" class="btn btn-warning"><i class="fa fa-pencil-square fa-fw"></i></button> ';
+				panel += ' <button value='+ value.id +' onclick="ShowSsoDelete(this);" data-toggle="modal" data-target="#myModal3" class="btn btn-danger"><i class="fa fa-trash fa-fw"></i></button>';		
 				panel += '</li>';
-				divLight.append(panel);
+				divSso.append(panel);
 			}else if(value.estatus == 'vencido')
 			{
 				var panel = '';
@@ -112,20 +112,20 @@ function ListLight()
 				panel += '<span class="badge"> Se vencio '+ pago +'</span>';
 				panel += '<h4 class="text-uppercase">'+ mes +'</h4>';
 				panel += '<hr />';
-				panel += '<button value='+ value.id +' onclick="ShowLight(this);" data-toggle="modal" data-target="#myModal2" class="btn btn-warning"><i class="fa fa-pencil-square fa-fw"></i></button> ';
-				panel += ' <button value='+ value.id +' onclick="ShowLightDelete(this);" data-toggle="modal" data-target="#myModal3" class="btn btn-danger"><i class="fa fa-trash fa-fw"></i></button>';		
+				panel += '<button value='+ value.id +' onclick="ShowSso(this);" data-toggle="modal" data-target="#myModal2" class="btn btn-warning"><i class="fa fa-pencil-square fa-fw"></i></button> ';
+				panel += ' <button value='+ value.id +' onclick="ShowSsoDelete(this);" data-toggle="modal" data-target="#myModal3" class="btn btn-danger"><i class="fa fa-trash fa-fw"></i></button>';		
 				panel += '</li>';
-				divLight.append(panel);
+				divSso.append(panel);
 			}else{
 				var panel = '';
 				panel += '<li class="list-group-item panel-danger list-group-item-warning">';
 				panel += '<span class="badge danger"> Vence '+ pago +'</span>';
 				panel += '<h4 class="text-uppercase">'+ mes +'</h4>';
 				panel += '<hr />';
-				panel += '<button value='+ value.id +' onclick="ShowLight(this);" data-toggle="modal" data-target="#myModal2" class="btn btn-warning"><i class="fa fa-pencil-square fa-fw"></i></button> ';
-				panel += ' <button value='+ value.id +' onclick="ShowLightDelete(this);" data-toggle="modal" data-target="#myModal3" class="btn btn-danger"><i class="fa fa-trash fa-fw"></i></button>';		
+				panel += '<button value='+ value.id +' onclick="ShowSso(this);" data-toggle="modal" data-target="#myModal2" class="btn btn-warning"><i class="fa fa-pencil-square fa-fw"></i></button> ';
+				panel += ' <button value='+ value.id +' onclick="ShowSsoDelete(this);" data-toggle="modal" data-target="#myModal3" class="btn btn-danger"><i class="fa fa-trash fa-fw"></i></button>';		
 				panel += '</li>';
-				divLight.append(panel);
+				divSso.append(panel);
 			}	
 			total = parseFloat(total) + parseFloat(value.monto);
 			sumaTotal = formatNumber.new(total);			
@@ -136,9 +136,9 @@ function ListLight()
 /*
  *	*************** EDIT ***************
  */
-function ShowLight(boton)
+function ShowSso(boton)
 {
-	var route = 'http://notes.dev/lights/'+ boton.value +'/edit';
+	var route = 'http://notes.dev/securities/'+ boton.value +'/edit';
 	$.get(route, function(respuesta)
 	{
 		$('#periodoEdit').val(respuesta.periodo);
@@ -149,7 +149,7 @@ function ShowLight(boton)
 		$('#id').val(respuesta.id);
 	});
 }
-$('#edit-light').click(function()
+$('#edit-sso').click(function()
 {
 	var id = $('#id').val();
 	var periodo = $('#periodoEdit').val();
@@ -158,7 +158,7 @@ $('#edit-light').click(function()
 	var monto =	$('#montoEdit').val();
 	var fecha_pago = $('#fechaPagoEdit').val();
 	var updateUser = $('#updateUser').val();
-	var route = 'http://notes.dev/lights/'+id+'';
+	var route = 'http://notes.dev/securities/'+id+'';
 	var token = $('#token').val();
 
 	$.ajax({
@@ -178,7 +178,7 @@ $('#edit-light').click(function()
 				successMessage += '<button type="button" class="close" data-dismiss="alert">&times;</button>';
 				successMessage += '<p><i class="fa fa-check fa-fw"></i>' + data.message + '</p>';
 				successMessage += '</div>';
-				ListLight();
+				ListSso();
 				$('#myModal2').modal('hide');
 				$('.success').show().html(successMessage);
 			}
@@ -188,9 +188,9 @@ $('#edit-light').click(function()
 /*
  *	*************** DELETE ***************
  */
-function ShowLightDelete(boton)
+function ShowSsoDelete(boton)
 {
-	var route = 'http://notes.dev/lights/'+ boton.value + '/edit';
+	var route = 'http://notes.dev/securities/'+ boton.value + '/edit';
 	$.get(route, function(respuesta)
 	{
 		var periodo = respuesta.periodo;
@@ -199,10 +199,10 @@ function ShowLightDelete(boton)
 		$('#id').val(respuesta.id);
 	});
 }
-$('#delete-light').click(function()
+$('#delete-sso').click(function()
 {
 	var id = $('#id').val();	
-	var route = 'http://notes.dev/lights/'+id+'';
+	var route = 'http://notes.dev/securities/'+id+'';
 	var token = $('#token').val();
 
 	$.ajax({
@@ -221,7 +221,7 @@ $('#delete-light').click(function()
 				successMessage += '<button type="button" class="close" data-dismiss="alert">&times;</button>';
 				successMessage += '<p><i class="fa fa-check fa-fw"></i>' + data.message + '</p>';
 				successMessage += '</div>';
-				ListLight();
+				ListSso();
 				$('#myModal3').modal('hide');
 				$('.success').show().html(successMessage);
 			}

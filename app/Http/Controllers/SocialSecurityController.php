@@ -7,9 +7,9 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Validator;
-use App\Water;
+use App\SocialSecurity;
 
-class WaterController extends Controller
+class SocialSecurityController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -22,9 +22,9 @@ class WaterController extends Controller
         $anioActual = date('Y');
         $periodo = $anioActual.'-'.$enero;
         //$waters = Water::with('user')->where('periodo', '>=', $periodo)->orderBy('id', 'DESC')->get();
-        $totalMontoActual = Water::where('periodo', '>=', $periodo)->sum('monto');
+        $totalMontoActual = SocialSecurity::where('periodo', '>=', $periodo)->sum('monto');
         //dd($totalMontoActual);
-        return view('admin.water.index')
+        return view('admin.securities.index')
             ->with('anioActual', $anioActual)
             ->with('totalMontoActual', $totalMontoActual);
     }
@@ -34,11 +34,10 @@ class WaterController extends Controller
         $enero = '01';
         $anioActual = date('Y');
         $periodo = $anioActual.'-'.$enero;
-        $waters = Water::with('user')->where('periodo', '>=', $periodo)->orderBy('id', 'DESC')->get();
-        $totalMontoActual = Water::where('periodo', '>=', $periodo)->sum('monto');
+        $securities = SocialSecurity::with('user')->where('periodo', '>=', $periodo)->orderBy('id', 'DESC')->get();
         
         return response()->json(
-            $waters->toArray()
+            $securities->toArray()
         );
     }
 
@@ -49,7 +48,7 @@ class WaterController extends Controller
      */
     public function create()
     {
-        return view('admin.water.create');
+        return view('admin.securities.create');
     }
 
     /**
@@ -61,9 +60,8 @@ class WaterController extends Controller
     public function store(Request $request)
     {
         date_default_timezone_set('America/Caracas');
-        
         $validator = Validator::make($request->all(), [
-            'periodo'   => 'required|unique:waters',
+            'periodo'   => 'required|unique:social_securities',
             'estatus'   => 'required'
         ]);
 
@@ -74,19 +72,15 @@ class WaterController extends Controller
                 'errors'    => $validator->getMessageBag()->toArray()
             ]);
         }else{
-            $water = new Water($request->all());
-            $water->save();
-            $periodo = date('m-Y', strtotime($water->periodo));
+            $security = new SocialSecurity($request->all());
+            $security->save();
+            $periodo = date('m-Y', strtotime($security->periodo));
 
-            if($water)
-            {
-                return response()->json([
-                    'success'   => true,
-                    'message'   => 'El gasto por agua del periodo <b>' . $periodo . '</b> se creó con exito!',
-                    'water'     => $water->toArray()
-                ]);
-            }
-        }        
+            return response()->json([
+                'success'   => true,
+                'message'   => 'EL gasto de seguro social del periodo <b>' . $periodo . '</b> se creó con exito!',
+            ]);
+        }
     }
 
     /**
@@ -108,10 +102,9 @@ class WaterController extends Controller
      */
     public function edit($id)
     {
-        $water = Water::find($id);
-
+        $security = SocialSecurity::find($id);
         return response()->json(
-            $water->toArray()
+            $security->toArray()
         );
     }
 
@@ -124,14 +117,14 @@ class WaterController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $water = Water::find($id);
-        $water->fill($request->all());
-        $water->save();
-        $periodo = date('m-Y', strtotime($water->periodo));
+        $security = SocialSecurity::find($id);
+        $security->fill($request->all());
+        $security->save();
+        $periodo = date('m-Y', strtotime($security->periodo));
 
         return response()->json([
             'success'   => true,
-            'message'   => 'El gasto por agua del periodo <b>' . $periodo . '</b> se actualizó con exito!'
+            'message'   => 'EL gasto de seguro social del periodo <b>' . $periodo . '</b> se actualizó con exito!'
         ]);
     }
 
@@ -143,13 +136,13 @@ class WaterController extends Controller
      */
     public function destroy($id)
     {
-        $water = Water::find($id);
-        $water->delete();
-        $periodo = date('m-Y', strtotime($water->periodo));
+        $security = SocialSecurity::find($id);
+        $security->delete();
+        $periodo = date('m-Y', strtotime($security->periodo));
 
         return response()->json([
             'success'   => true,
-            'message'   => 'El gasto por agua del periodo <b>' . $periodo . '</b> se eliminó con exito!'
+            'message'   => 'EL gasto de seguro social del periodo <b>' . $periodo . '</b> se eliminó con exito!'
         ]);
     }
 }
