@@ -66,4 +66,9 @@ class User extends Model implements AuthenticatableContract,
     {
         return $this->hasMany('App\SocialSecurity', 'id_user');
     }
+
+    public function faovs()
+    {
+        return $this->hasMany('App\Faov', 'id_user');
+    }
 }

@@ -76,3 +76,5 @@ Route::get('phone', 'PhonesController@getList');
 // Social Security
 Route::resource('securities', 'SocialSecurityController');
 Route::get('security', 'SocialSecurityController@getList');
+// Faov
+Route::resource('faovs', 'FaovController');
