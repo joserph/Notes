@@ -5,7 +5,23 @@ var app = new Vue({
 		errors: {}
 	},
 
-	created: function(){
-		Vue.set(this.$data, 'form', _form); // Seteo mis inputs.
+	methods: {
+		index: function()
+		{
+			this.$http.get('/faovs', function(data)
+			{
+				this.$set('faovs', data)
+			})
+		},
+
+		created: function(){
+			Vue.set(this.$data, 'form', _form); // Seteo mis inputs.
+		}
+	},
+	
+
+	ready: function()
+	{
+		this.index()
 	}
 })

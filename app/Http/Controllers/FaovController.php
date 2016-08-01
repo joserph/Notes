@@ -17,17 +17,9 @@ class FaovController extends Controller
      */
     public function index()
     {
-        $enero = '01';
-        $anioActual = date('Y');
-        $periodo = $anioActual.'-'.$enero;
-        //$waters = Water::with('user')->where('periodo', '>=', $periodo)->orderBy('id', 'DESC')->get();
-        $totalMontoActual = Faov::where('periodo', '>=', $periodo)->sum('monto');
-        //dd($totalMontoActual);
         $faovs = Faov::orderBy('id', 'DESC')->get();
         return view('admin.faovs.index')
-            ->with('faovs', $faovs)
-            ->with('totalMontoActual', $totalMontoActual)
-            ->with('anioActual', $anioActual);
+            ->with('faovs', $faovs);
     }
 
     /**
