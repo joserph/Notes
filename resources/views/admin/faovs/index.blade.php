@@ -53,8 +53,8 @@
 	
 	
     @section('scripts')		
-        <script src="{{ asset('js/vue.js') }}"></script>
-        <script src="{{ asset('js/vue-resource.js') }}"></script>
+        <script src="{{ asset('js/vue.min.js') }}"></script>
+        <script src="{{ asset('js/vue-resource.min.js') }}"></script>
         <script src="{{ asset('js/app.js') }}"></script>
     @endsection
 @endsection

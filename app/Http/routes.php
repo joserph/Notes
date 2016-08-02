@@ -78,7 +78,7 @@ Route::resource('securities', 'SocialSecurityController');
 Route::get('security', 'SocialSecurityController@getList');
 // Faov
 Route::resource('faovs', 'FaovController');
-//Route::get('faov', 'FaovController@getList');
+Route::get('faov', 'FaovController@getList');
 /*Route::get('/faovs', function()
 {
 	$faovs = App\Faov::latest()->get();
