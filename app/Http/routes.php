@@ -77,9 +77,10 @@ Route::get('phone', 'PhonesController@getList');
 Route::resource('securities', 'SocialSecurityController');
 Route::get('security', 'SocialSecurityController@getList');
 // Faov
-//Route::resource('faovs', 'FaovController');
-
-Route::get('faovs', function()
+Route::resource('faovs', 'FaovController');
+//Route::get('faov', 'FaovController@getList');
+/*Route::get('/faovs', function()
 {
-	return App\Faov::all();
-});
+	$faovs = App\Faov::latest()->get();
+    return view('admin.faovs.index', compact('faovs'));
+});*/

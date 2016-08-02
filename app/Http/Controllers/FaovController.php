@@ -17,9 +17,16 @@ class FaovController extends Controller
      */
     public function index()
     {
+        $faovs = Faov::latest()->get();
+        return view('admin.faovs.index', compact('faovs'));
+    }
+
+    public function getList()
+    {
         $faovs = Faov::orderBy('id', 'DESC')->get();
-        return view('admin.faovs.index')
-            ->with('faovs', $faovs);
+        return response()->json(
+            $faovs->toArray()
+        );
     }
 
     /**

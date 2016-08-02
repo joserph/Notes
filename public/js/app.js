@@ -1,27 +1,20 @@
-var app = new Vue({
-	el: '#faov',
-	data: {
-		form: {},
-		errors: {}
+Vue.component('faovs', {
+	template: '#faovs-template',
+
+	data: function(){
+		return {
+			list: []
+		};
 	},
 
-	methods: {
-		index: function()
+	created: function(){
+		$.getJSON('faovs', function(faovs)
 		{
-			this.$http.get('/faovs', function(data)
-			{
-				this.$set('faovs', data)
-			})
-		},
-
-		created: function(){
-			Vue.set(this.$data, 'form', _form); // Seteo mis inputs.
-		}
-	},
-	
-
-	ready: function()
-	{
-		this.index()
+			this.list = faovs;
+		});
 	}
+})
+
+new Vue({
+	el: '#faov'
 })
