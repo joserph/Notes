@@ -29,6 +29,11 @@ class FaovController extends Controller
         );
     }
 
+    public function postFaov(Request $request)
+    {
+        return Faov::create($request->all());
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -47,7 +52,7 @@ class FaovController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return Faov::create(Request::all());
     }
 
     /**
