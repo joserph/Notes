@@ -14,9 +14,7 @@
             <li><a href="{{ route('admin.index') }}">Panel de administración</a></li>
             <li class="active">Pagos faov</li>
         </ol>
-        <faovs list="{{ $faovs }}"></faovs>
-        <template id="faovs-template">
-            <!-- .table -->
+        <!-- .table -->
             <div class="table-responsive">
                 <table class="table table-striped table-hover table-responsive">
                     <thead>
@@ -29,7 +27,7 @@
                         <th class="text-center">Acción</th>
                     </thead>            
                     <tbody>
-                        <tr v-for="faov in list">
+                        <tr v-for="faov in faovs">
                             <td>@{{ faov.id }}</td>
                             <td class="text-center">@{{ faov.periodo }}</td>
                             <td class="text-center">@{{ faov.estatus }}</td>
@@ -43,8 +41,11 @@
                     </tbody>                   
                 </table>
             </div>
-            <!-- /.table -->
-        </template>
+        <!-- /.table -->
+
+        <pre>
+            @{{ $data | json }}
+        </pre>
         <div class="panel-body">
             
             

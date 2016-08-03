@@ -1,13 +1,19 @@
-Vue.component('faovs', {
-	template: '#faovs-template',
+new Vue({
+	el: '#faov',
 
-	props: ['list'],
+	data: {
+		faovs: []
+	},
 
-	created(){
-		this.list = JSON.parse(this.list);
+	ready: function(){
+		this.listFaovs();
+	},
+
+	methods: {
+		listFaovs: function(){
+			this.$http.get('faov').then(function(faovs){
+				this.$set('faovs', faovs.data)
+			});
+		}
 	}
 });
-
-new Vue({
-	el: '#faov'
-})
