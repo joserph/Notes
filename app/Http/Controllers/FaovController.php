@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Faov;
+use Validator;
 
 class FaovController extends Controller
 {
@@ -17,8 +18,15 @@ class FaovController extends Controller
      */
     public function index()
     {
-        $faovs = Faov::latest()->get();
-        return view('admin.faovs.index', compact('faovs'));
+        $enero = '01';
+        $anioActual = date('Y');
+        $periodo = $anioActual.'-'.$enero;
+        //$waters = Water::with('user')->where('periodo', '>=', $periodo)->orderBy('id', 'DESC')->get();
+        $totalMontoActual = Faov::where('periodo', '>=', $periodo)->sum('monto');
+        //dd($totalMontoActual);
+        return view('admin.faovs.index')
+            ->with('anioActual', $anioActual)
+            ->with('totalMontoActual', $totalMontoActual);
     }
 
     public function getList()
@@ -27,11 +35,6 @@ class FaovController extends Controller
         return response()->json(
             $faovs->toArray()
         );
-    }
-
-    public function postFaov(Request $request)
-    {
-        return Faov::create($request->all());
     }
 
     /**
@@ -52,7 +55,30 @@ class FaovController extends Controller
      */
     public function store(Request $request)
     {
-        return Faov::create(Request::all());
+        $validator = Validator::make($request->all(), [
+            'periodo'   => 'required|unique:faovs',
+            'estatus'   => 'required'
+        ]);
+
+        if($validator->fails())
+        {
+            return response()->json([
+                'success'   => false,
+                'errors'    => $validator->getMessageBag()->toArray()
+            ]);
+        }else{
+            $faov = new Faov($request->all());
+            $faov->save();
+            $periodo = date('m-Y', strtotime($faov->periodo));
+
+            return response()->json([
+                'success'   => true,
+                'message'   => 'El gasto por FAOV del periodo <b>' . $periodo . '</b> se creó con exito!'
+            ]);
+        }
+        
+
+
     }
 
     /**
@@ -74,7 +100,10 @@ class FaovController extends Controller
      */
     public function edit($id)
     {
-        //
+        $faov = Faov::find($id);
+        return response()->json(
+            $faov->toArray()
+        );
     }
 
     /**
@@ -86,7 +115,15 @@ class FaovController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $faov = Faov::find($id);
+        $faov->fill($request->all());
+        $faov->save();
+        $periodo = date('m-Y', strtotime($faov->periodo));
+
+        return response()->json([
+            'success'   => true,
+            'message'   => 'El gasto por FAOV del periodo <b>' . $periodo . '</b> se actualizó con exito!'
+        ]);
     }
 
     /**
@@ -97,6 +134,13 @@ class FaovController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $faov = Faov::find($id);
+        $faov->delete();
+        $periodo = date('m-Y', strtotime($faov->periodo));
+
+        return response()->json([
+            'success'   => true,
+            'message'   => 'El gasto por FAOV del periodo <b>' . $periodo . '</b> se eliminó con exito!'
+        ]);
     }
 }

@@ -1,48 +1,40 @@
-@extends('template.layout')
-
-@section('title') Crear pago faov | App notes @stop
-
-@section('content')
-	<div class="success"></div>
-	<h2 class="page-header"><i class="fa fa-wheelchair fa-fw"></i> 
-		Crear pago faov
-		<a href="{{ route('faovs.index') }}" class="btn btn-default pull-right"><i class="fa fa-"></i>Atras</a>
-	</h2>
-    <ol class="breadcrumb">
-        <li><a href="/">Inicio</a></li>
-        <li><a href="{{ route('admin.index') }}">Panel de administración</a></li>
-        <li class="active">Crear pago faov</li>
-    </ol>
-
-    <div id="faov">
-        <div class="panel panel-default" v-clock>
-            <div class="panel-heading">
-                <div class="clearfix">
-                    <span class="panel-title">Crear pago</span>
-                </div>
-            </div>
-            <div class="panel-body">
-                @include('admin.faovs.form')
-            </div>
+<div class="error"></div>
+{!! Form::open(['route' => 'faovs.store', 'class' => 'add-faov']) !!}
+    {!! Form::hidden('id_user', Auth::user()->id) !!}
+    {!! Form::hidden('update_user', Auth::user()->id) !!}
+    {!! Form::label('periodo', 'Periodo') !!}
+    <div class="row">
+        <div class="col-md-6">
+            <input type="month" name="periodo" class="form-control" placeholder="mm-yyyy" id="myInput">
         </div>
     </div>
-    
-    @section('scripts')		
-        <script src="{{ asset('js/vue.js') }}"></script>
-        <script src="{{ asset('js/vue-resource.js') }}"></script>
-        <script type="text/javascript">
-            Vue.http.headers.common['X-CSRF-TOKEN'] = '{{ csrf_token() }}';
-
-            window._form = {
-                id_user: '',
-                update_user: '',
-                periodo: '',
-                estatus: '',
-                pagado_por: '',
-                monto: '',
-                fecha_pago: ''
-            }
-        </script>
-        <script src="{{ asset('js/app.js') }}"></script>
-    @endsection
-@endsection
+    {!! Form::label('estatus', 'Estatus') !!}
+    <div class="row">
+        <div class="col-md-4">
+            {!! Form::select('estatus', [
+                'pago'      => 'Pago', 
+                'por pagar' => 'Por pagar',
+                'vencido'   => 'Vencido'], null, ['class' => 'form-control', 'placeholder' => 'Seleccione estatus']) !!}
+        </div>
+    </div>
+    {!! Form::label('pagado_por', 'Pagado por') !!}
+    <div class="row">
+        <div class="col-md-12">
+            {!! Form::text('pagado_por', null, ['class' => 'form-control', 'placeholder' => 'Nombre de la persona que paga']) !!}
+        </div>
+    </div>
+    {!! Form::label('monto', 'Monto') !!}
+    <div class="row">
+        <div class="col-md-6">
+            {!! Form::text('monto', null, ['class' => 'form-control', 'placeholder' => 'Monto']) !!}
+        </div>
+    </div>
+    {!! Form::label('fecha_pago', 'Fecha') !!}
+    <div class="row">
+        <div class="col-md-6">
+            {!! Form::date('fecha_pago', null, ['class' => 'form-control', 'placeholder' => 'dd/mm/yyyy']) !!}
+        </div>
+    </div>
+    <br>    
+    <button tipe="submit" class="btn btn-success"><i class="fa fa-plus-circle"></i> Crear</button>
+{!! Form::close() !!}

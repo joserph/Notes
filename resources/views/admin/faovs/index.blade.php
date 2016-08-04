@@ -3,104 +3,91 @@
 @section('title') Pagos faov | App notes @stop
 
 @section('content')
-    <div id="faov">
-        <div class="success"></div>
-        <h2 class="page-header"><i class="fa fa-wheelchair fa-fw"></i> 
-            Pagos faov
-            <a href="{{ route('faovs.create') }}" class="btn btn-success pull-right"><i class="fa fa-plus-circle"></i></a>
-        </h2>
-        <ol class="breadcrumb">
-            <li><a href="/">Inicio</a></li>
-            <li><a href="{{ route('admin.index') }}">Panel de administración</a></li>
-            <li class="active">Pagos faov</li>
-        </ol>
+    <div class="success"></div>
+    <h2 class="page-header"><i class="fa fa-lightbulb-o fa-fw"></i> 
+        Pagos faov
+        <button type="button" class="pull-right btn btn-success" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus-circle fa-fw"></i></button>
+    </h2>
+    <ol class="breadcrumb">
+        <li><a href="/">Inicio</a></li>
+        <li><a href="{{ route('admin.index') }}">Panel de administración</a></li>
+        <li class="active">Pagos faov</li>
+    </ol>
 
-        <form action="#" @submit.prevent="AddNewFaov" method="POST">
-            <div class="form-group">
-                <input type="hidden" v-model="newFaov.id_user" value="{{ Auth::user()->id }}">
-                <input type="hidden" v-model="newFaov.update_user" value="{{ Auth::user()->id }}">
-                {!! Form::label('periodo', 'Periodo') !!}
-                <div class="row">
-                    <div class="col-md-4">
-                        <input type="month" name="periodo" class="form-control" placeholder="mm-yyyy" v-model="newFaov.periodo">
-                        <p class="text-primary" v-if="!isValid" v-show="!validation.periodo">El campo periodo es requerido</p>
-                    </div>
-                </div>
-                {!! Form::label('estatus', 'Estatus') !!}
-                <div class="row">
-                <div class="col-md-4">
-                    {!! Form::select('estatus', [
-                        'pago'      => 'Pago', 
-                        'por pagar' => 'Por pagar',
-                        'vencido'   => 'Vencido'], null, ['class' => 'form-control', 'placeholder' => 'Seleccione estatus', 'v-model' => 'newFaov.estatus']) !!}
-                        <p class="text-primary" v-if="!isValid" v-show="!validation.estatus">El campo estatus es requerido</p>
-                </div>
-                </div>
-                {!! Form::label('pagado_por', 'Pagado por') !!}
-                <div class="row">
-                    <div class="col-md-6">
-                        {!! Form::text('pagado_por', null, ['class' => 'form-control', 'placeholder' => 'Nombre de la persona que paga', 'v-model' => 'newFaov.pagado_por']) !!}                        
-                    </div>
-                </div>
-                {!! Form::label('monto', 'Monto') !!}
-                <div class="row">
-                    <div class="col-md-6">
-                        {!! Form::text('monto', null, ['class' => 'form-control', 'placeholder' => 'Monto', 'v-model' => 'newFaov.monto']) !!}                        
-                    </div>
-                </div>
-                {!! Form::label('fecha_pago', 'Fecha') !!}
-                <div class="row">
-                    <div class="col-md-4">
-                        {!! Form::date('fecha_pago', null, ['class' => 'form-control', 'placeholder' => 'dd/mm/yyyy', 'v-model' => 'newFaov.fecha_pago']) !!}
-                    </div>
-                </div>
-                <br>    
-                <button type="submit" :disabled="!isValid" class="btn btn-success"><i class="fa fa-plus-circle"></i> Crear</button>
+    <!-- Panels notes -->
+    <div class="col-md-6 col-md-offset-3">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Año {{ $anioActual }} <span class="pull-right"><button class="btn btn-info btn-xs">Total pagado <i class="fa fa-arrow-right"></i> <span id="total"></span></button></span></h3>
             </div>
-        </form>
-        <hr>
-        <!-- .table -->
-            <div class="table-responsive">
-                <table class="table table-striped table-hover table-responsive">
-                    <thead>
-                        <th>#</th>
-                        <th class="text-center">Periodo</th>
-                        <th class="text-center">Estatus</th>  
-                        <th class="text-center">Pagado por</th>
-                        <th class="text-center">Monto</th>
-                        <th class="text-center">Fecha</th>  
-                        <th class="text-center">Acción</th>
-                    </thead>            
-                    <tbody>
-                        <tr v-for="faov in faovs">
-                            <td>@{{ faov.id }}</td>
-                            <td class="text-center">@{{ faov.periodo }}</td>
-                            <td class="text-center">@{{ faov.estatus }}</td>
-                            <td class="text-center">@{{ faov.pagado_por }}</td>
-                            <td class="text-center">@{{ faov.monto }}</td>
-                            <td class="text-center">@{{ faov.fecha_pago }}</td>
-                            <td class="text-center">
-                                <a href="#" class="btn btn-warning btn-xs"><i class="fa fa-edit fa-fw"></i> Editar</a>
-                            </td>                          
-                        </tr>
-                    </tbody>                   
-                </table>
+            <div class="panel-body">
+                <ul class="list-group" id="listFaov">
+      
+                </ul>
             </div>
-        <!-- /.table -->
-
-        <pre>
-            @{{ $data | json }}
-        </pre>
-        <div class="panel-body">
-            
-            
+        </div>        
+    </div>
+    <!-- Modal Add-->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel"><i class="fa fa-plus-circle fa-fw"></i> Crear pago faov</h4>
+                </div>
+                <div class="modal-body">
+                    @include('admin.faovs.create')
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
         </div>
     </div>
-	
-	
-    @section('scripts')		
-        <script src="{{ asset('js/vue.min.js') }}"></script>
-        <script src="{{ asset('js/vue-resource.min.js') }}"></script>
-        <script src="{{ asset('js/app.js') }}"></script>
+
+    <!-- Modal Edit-->
+    <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel"><i class="fa fa-pencil-square fa-fw"></i> Editar pago faov</h4>
+                </div>
+                <div class="modal-body">
+                    @include('admin.faovs.edit')
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+     <!-- Modal Delete-->
+    <div class="modal fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel"><i class="fa fa-trash fa-fw"></i> Eliminar pago faov</h4>
+                </div>
+                <div class="modal-body">
+                    @include('admin.faovs.delete')
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    @section('scripts')     
+        <script src="{{ asset('js/pinterest_grid.js') }}"></script>
+        <script src="{{ asset('js/modules/scriptsFaov.js') }}"></script>
+        <script>
+            $('#myModal').on('shown.bs.modal', function () {
+                $('#myInput').focus()
+            });
+        </script>
     @endsection
 @endsection
