@@ -82,3 +82,6 @@ Route::get('faov', 'FaovController@getList');
 // Sumat
 Route::resource('sumats', 'SumatController');
 Route::get('sumat', 'SumatController@getList');
+// Forma 99035
+Route::resource('iva99035s', 'Iva99035Controller');
+Route::get('iva99035', 'Iva99035Controller@getList');

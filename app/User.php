@@ -76,4 +76,9 @@ class User extends Model implements AuthenticatableContract,
     {
         return $this->hasMany('App\Sumat', 'id_user');
     }
+
+    public function iva99035s()
+    {
+        return $this->hasMany('App\Iva99035', 'id_user');
+    }
 }
