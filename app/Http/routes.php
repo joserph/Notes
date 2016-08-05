@@ -79,3 +79,6 @@ Route::get('security', 'SocialSecurityController@getList');
 // Faov
 Route::resource('faovs', 'FaovController');
 Route::get('faov', 'FaovController@getList');
+// Sumat
+Route::resource('sumats', 'SumatController');
+Route::get('sumat', 'SumatController@getList');

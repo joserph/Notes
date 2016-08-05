@@ -71,4 +71,9 @@ class User extends Model implements AuthenticatableContract,
     {
         return $this->hasMany('App\Faov', 'id_user');
     }
+
+    public function sumats()
+    {
+        return $this->hasMany('App\Sumat', 'id_user');
+    }
 }

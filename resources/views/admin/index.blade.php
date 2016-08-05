@@ -149,7 +149,7 @@
             </div>
         </div>  
 
-        <!-- Phone -->
+        <!-- Social Security -->
         <div class="col-lg-3 col-md-6">
             <div class="panel panel-info">
                 <div class="panel-heading">
@@ -168,6 +168,62 @@
                     </div>
                 </div>
                 <a href="{{ route('securities.index') }}">
+                    <div class="panel-footer">
+                        <span class="pull-left">Ver Detalles</span>
+                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
+            </div>
+        </div>   
+
+        <!-- Faov -->
+        <div class="col-lg-3 col-md-6">
+            <div class="panel panel-warning">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-3">                            
+                            <i class="fa fa-home fa-5x"></i>                                                       
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            <div class="huge numeroPanel">{{ $countFaovs }}</div>
+                            @if($countFaovs > 1)
+                                <div>Pagos de FAOV!</div>
+                            @else
+                                <div>Pago de FAOV!</div>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+                <a href="{{ route('faovs.index') }}">
+                    <div class="panel-footer">
+                        <span class="pull-left">Ver Detalles</span>
+                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
+            </div>
+        </div>  
+
+        <!-- Sumat -->
+        <div class="col-lg-3 col-md-6">
+            <div class="panel panel-danger">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-3">                            
+                            <i class="fa fa-star fa-5x"></i>                                                       
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            <div class="huge numeroPanel">{{ $countSumats }}</div>
+                            @if($countSumats > 1)
+                                <div>Pagos de SUMAT!</div>
+                            @else
+                                <div>Pago de SUMAT!</div>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+                <a href="{{ route('sumats.index') }}">
                     <div class="panel-footer">
                         <span class="pull-left">Ver Detalles</span>
                         <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>

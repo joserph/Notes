@@ -6,10 +6,10 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Faov;
+use App\Sumat;
 use Validator;
 
-class FaovController extends Controller
+class SumatController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -22,18 +22,18 @@ class FaovController extends Controller
         $anioActual = date('Y');
         $periodo = $anioActual.'-'.$enero;
         //$waters = Water::with('user')->where('periodo', '>=', $periodo)->orderBy('id', 'DESC')->get();
-        $totalMontoActual = Faov::where('periodo', '>=', $periodo)->sum('monto');
+        $totalMontoActual = Sumat::where('periodo', '>=', $periodo)->sum('monto');
         //dd($totalMontoActual);
-        return view('admin.faovs.index')
+        return view('admin.sumats.index')
             ->with('anioActual', $anioActual)
             ->with('totalMontoActual', $totalMontoActual);
     }
 
     public function getList()
     {
-        $faovs = Faov::orderBy('id', 'DESC')->get();
+        $sumats = Sumat::orderBy('id', 'DESC')->get();
         return response()->json(
-            $faovs->toArray()
+            $sumats->toArray()
         );
     }
 
@@ -44,7 +44,7 @@ class FaovController extends Controller
      */
     public function create()
     {
-        return view('admin.faovs.create');
+        return view('admin.sumats.create');
     }
 
     /**
@@ -57,7 +57,7 @@ class FaovController extends Controller
     {
         date_default_timezone_set('America/Caracas');
         $validator = Validator::make($request->all(), [
-            'periodo'   => 'required|unique:faovs',
+            'periodo'   => 'required|unique:sumats',
             'estatus'   => 'required'
         ]);
 
@@ -68,18 +68,15 @@ class FaovController extends Controller
                 'errors'    => $validator->getMessageBag()->toArray()
             ]);
         }else{
-            $faov = new Faov($request->all());
-            $faov->save();
-            $periodo = date('m-Y', strtotime($faov->periodo));
+            $sumat = new Sumat($request->all());
+            $sumat->save();
+            $periodo = date('m-Y', strtotime($sumat->periodo));
 
             return response()->json([
                 'success'   => true,
-                'message'   => 'El gasto por FAOV del periodo <b>' . $periodo . '</b> se creó con exito!'
+                'message'   => 'El gasto por SUMAT del periodo <b>' . $periodo . '</b> se creó con exito!'
             ]);
         }
-        
-
-
     }
 
     /**
@@ -101,9 +98,9 @@ class FaovController extends Controller
      */
     public function edit($id)
     {
-        $faov = Faov::find($id);
+        $sumat = Sumat::find($id);
         return response()->json(
-            $faov->toArray()
+            $sumat->toArray()
         );
     }
 
@@ -116,14 +113,14 @@ class FaovController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $faov = Faov::find($id);
-        $faov->fill($request->all());
-        $faov->save();
-        $periodo = date('m-Y', strtotime($faov->periodo));
+        $sumat = Sumat::find($id);
+        $sumat->fill($request->all());
+        $sumat->save();
+        $periodo = date('m-Y', strtotime($sumat->periodo));
 
         return response()->json([
             'success'   => true,
-            'message'   => 'El gasto por FAOV del periodo <b>' . $periodo . '</b> se actualizó con exito!'
+            'message'   => 'El gasto por SUMAT del periodo <b>' . $periodo . '</b> se actualizó con exito!'
         ]);
     }
 
@@ -135,13 +132,13 @@ class FaovController extends Controller
      */
     public function destroy($id)
     {
-        $faov = Faov::find($id);
-        $faov->delete();
-        $periodo = date('m-Y', strtotime($faov->periodo));
+        $sumat = Sumat::find($id);
+        $sumat->delete();
+        $periodo = date('m-Y', strtotime($sumat->periodo));
 
         return response()->json([
             'success'   => true,
-            'message'   => 'El gasto por FAOV del periodo <b>' . $periodo . '</b> se eliminó con exito!'
+            'message'   => 'El gasto por SUMAT del periodo <b>' . $periodo . '</b> se eliminó con exito!'
         ]);
     }
 }

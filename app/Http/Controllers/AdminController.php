@@ -13,6 +13,8 @@ use App\Water;
 use App\Light;
 use App\Phone;
 use App\SocialSecurity;
+use App\Faov;
+use App\Sumat;
 
 class AdminController extends Controller
 {
@@ -34,6 +36,8 @@ class AdminController extends Controller
         $countLights = Light::count();
         $countPhones = Phone::count();
         $countSocialSecurities = SocialSecurity::count();
+        $countFaovs = Faov::count();
+        $countSumats = Sumat::count();
         //dd($countNotes);
         return view('admin.index')
             ->with('countNotes', $countNotes)
@@ -41,7 +45,9 @@ class AdminController extends Controller
             ->with('countWaters', $countWaters)
             ->with('countLights', $countLights)
             ->with('countPhones', $countPhones)
-            ->with('countSocialSecurities', $countSocialSecurities);
+            ->with('countSocialSecurities', $countSocialSecurities)
+            ->with('countFaovs', $countFaovs)
+            ->with('countSumats', $countSumats);
     }
 
     /**
