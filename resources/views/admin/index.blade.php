@@ -3,7 +3,7 @@
 @section('title', 'Auth System') 
 
 @section('content')
-    <h2 class="page-header"><i class="fa fa-cogs fa-fw"></i> Panel de administración</h2>
+    <h1 class="page-header"><i class="fa fa-cogs fa-fw"></i> Panel de administración</h1>
     <ol class="breadcrumb">
         <li><a href="/">Inicio</a></li>
         <li class="active">Panel de administración</li>
@@ -231,8 +231,86 @@
                     </div>
                 </a>
             </div>
-        </div>   
-        
+        </div>           
     </div>
+
+    <div class="row">
+    <h2 class="page-header text-center"><i class="fa fa-calculator"></i> Gastos de impuestos</h2>
+        <div class="col-lg-6 col-md-6">            
+            <h3 class="page-header">Impuesto al Valor Agregado (I.V.A.)</h3>
+                <!-- I.V.A. 99035 -->
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <span class="pull-left">
+                            @if($countIva99035 > 1)
+                                <div class="text-uppercase">Pagos de F-99035!</div>
+                            @else
+                                <div class="text-uppercase">Pago de F-99035!</div>
+                            @endif
+                        </span>
+                        <span class="badge pull-right">{{ $countIva99035 }}</span>   
+                        <div class="clearfix"></div>                    
+                    </div>
+                    <a href="{{ route('iva99035s.index') }}">
+                        <div class="panel-footer">
+                            <span class="pull-left">Ver Detalles</span>
+                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                            <div class="clearfix"></div>
+                        </div>
+                    </a>
+                </div>    
+
+                <!-- I.V.A. 99030 -->
+                <div class="panel panel-warning">
+                    <div class="panel-heading">
+                        <span class="pull-left">
+                            @if($countIva99030 > 1)
+                                <div class="text-uppercase">Pagos de F-99030!</div>
+                            @else
+                                <div class="text-uppercase">Pago de F-99030!</div>
+                            @endif
+                        </span>
+                        <span class="badge pull-right">{{ $countIva99030 }}</span>   
+                        <div class="clearfix"></div>                    
+                    </div>
+                    <a href="{{ route('iva99030s.index') }}">
+                        <div class="panel-footer">
+                            <span class="pull-left">Ver Detalles</span>
+                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                            <div class="clearfix"></div>
+                        </div>
+                    </a>
+                </div>                
+        </div>
+        <div class="col-lg-6 col-md-6">
+            <!-- I.S.L.R. -->                
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-3">                            
+                            <i class="fa fa-wheelchair fa-5x"></i>                                                       
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            <div class="huge numeroPanel">{{ $countSocialSecurities }}</div>
+                            @if($countSocialSecurities > 1)
+                                <div>Pagos de seguro social!</div>
+                            @else
+                                <div>Pago de seguro social!</div>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+                <a href="{{ route('securities.index') }}">
+                    <div class="panel-footer">
+                        <span class="pull-left">Ver Detalles</span>
+                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
+            </div>   
+        </div>
+    </div>
+            
+       
 
 @endsection

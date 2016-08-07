@@ -15,6 +15,8 @@ use App\Phone;
 use App\SocialSecurity;
 use App\Faov;
 use App\Sumat;
+use App\Iva99035;
+use App\Iva99030;
 
 class AdminController extends Controller
 {
@@ -38,6 +40,8 @@ class AdminController extends Controller
         $countSocialSecurities = SocialSecurity::count();
         $countFaovs = Faov::count();
         $countSumats = Sumat::count();
+        $countIva99035 = Iva99035::count();
+        $countIva99030 = Iva99030::count();
         //dd($countNotes);
         return view('admin.index')
             ->with('countNotes', $countNotes)
@@ -47,7 +51,9 @@ class AdminController extends Controller
             ->with('countPhones', $countPhones)
             ->with('countSocialSecurities', $countSocialSecurities)
             ->with('countFaovs', $countFaovs)
-            ->with('countSumats', $countSumats);
+            ->with('countSumats', $countSumats)
+            ->with('countIva99035', $countIva99035)
+            ->with('countIva99030', $countIva99030);
     }
 
     /**
