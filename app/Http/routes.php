@@ -82,9 +82,17 @@ Route::get('faov', 'FaovController@getList');
 // Sumat
 Route::resource('sumats', 'SumatController');
 Route::get('sumat', 'SumatController@getList');
+/**** I.V.A. *****/
 // Forma 99035
 Route::resource('iva99035s', 'Iva99035Controller');
 Route::get('iva99035', 'Iva99035Controller@getList');
-// Form 99030
+// Forma 99030
 Route::resource('iva99030s', 'Iva99030Controller');
 Route::get('iva99030', 'Iva99030Controller@getList');
+/**** I.S.L.R. *****/
+// Forma 99074
+Route::resource('islr99074s', 'Islr99074Controller');
+Route::get('islr99074', 'Islr99074Controller@getList');
+// Forma 99228
+Route::resource('islr99228s', 'Islr99228Controller');
+Route::get('islr99228', 'Islr99228Controller@getList');

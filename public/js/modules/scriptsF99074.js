@@ -3,13 +3,13 @@
  */
 $(document).ready(function()
 {
-	var formF99030 = $('.add-f99030');
-	formF99030.on('submit', function()
+	var formF99074 = $('.add-f99074');
+	formF99074.on('submit', function()
 	{
 		$.ajax({
-			type: formF99030.attr('method'),
-			url: formF99030.attr('action'),
-			data: formF99030.serialize(),
+			type: formF99074.attr('method'),
+			url: formF99074.attr('action'),
+			data: formF99074.serialize(),
 			success: function(data)
 			{
 				$('.error').html('');
@@ -32,9 +32,9 @@ $(document).ready(function()
 						successMessage += '<button type="button" class="close" data-dismiss="alert">&times;</button>';
 						successMessage += '<p><i class="fa fa-check-circle fa-fw"></i> ' + data.message + '</p>';
 						successMessage += '</div>';
-					$(formF99030)[0].reset();								
+					$(formF99074)[0].reset();								
 					$('#myModal').modal('hide');
-					ListF99030();
+					ListF99074();
 					$('.success').show().html(successMessage);
 				}
 			},
@@ -45,17 +45,17 @@ $(document).ready(function()
 		});
 		return false;
 	});
-	ListF99030();
+	ListF99074();
 });
 /*
  *	*************** LIST ***************
  */
-function ListF99030()
+function ListF99074()
 {
-	var divF99030 = $('#listF99030');
+	var divF99074 = $('#listF99074');
 	var spanTotal = $('#total');
-	var route = 'http://notes.dev/iva99030';
-	$('#listF99030').empty();
+	var route = 'http://notes.dev/islr99074';
+	$('#listF99074').empty();
 	$('#total').empty();
 	$.get(route, function(respuesta)
 	{
@@ -101,10 +101,10 @@ function ListF99030()
 				panel += '<hr />';
 				panel += '<p>Pagado por <em><b>'+ value.pagado_por +'</b></em></p>';
 				panel += '<p>Monto: <kbd>'+ formatNumber.new(value.monto) +'</kbd></p>';
-				panel += '<button value='+ value.id +' onclick="ShowF99030(this);" data-toggle="modal" data-target="#myModal2" class="btn btn-warning"><i class="fa fa-pencil-square fa-fw"></i></button> ';
-				panel += ' <button value='+ value.id +' onclick="ShowF99030Delete(this);" data-toggle="modal" data-target="#myModal3" class="btn btn-danger"><i class="fa fa-trash fa-fw"></i></button>';		
+				panel += '<button value='+ value.id +' onclick="ShowF99074(this);" data-toggle="modal" data-target="#myModal2" class="btn btn-warning"><i class="fa fa-pencil-square fa-fw"></i></button> ';
+				panel += ' <button value='+ value.id +' onclick="ShowF99074Delete(this);" data-toggle="modal" data-target="#myModal3" class="btn btn-danger"><i class="fa fa-trash fa-fw"></i></button>';		
 				panel += '</li>';
-				divF99030.append(panel);
+				divF99074.append(panel);
 			}else if(value.estatus == 'vencido')
 			{
 				var panel = '';
@@ -112,20 +112,20 @@ function ListF99030()
 				panel += '<span class="badge"> Se vencio '+ pago +'</span>';
 				panel += '<h4 class="text-uppercase">'+ mes +'</h4>';
 				panel += '<hr />';
-				panel += '<button value='+ value.id +' onclick="ShowF99030(this);" data-toggle="modal" data-target="#myModal2" class="btn btn-warning"><i class="fa fa-pencil-square fa-fw"></i></button> ';
-				panel += ' <button value='+ value.id +' onclick="ShowF99030Delete(this);" data-toggle="modal" data-target="#myModal3" class="btn btn-danger"><i class="fa fa-trash fa-fw"></i></button>';		
+				panel += '<button value='+ value.id +' onclick="ShowF99074(this);" data-toggle="modal" data-target="#myModal2" class="btn btn-warning"><i class="fa fa-pencil-square fa-fw"></i></button> ';
+				panel += ' <button value='+ value.id +' onclick="ShowF99074Delete(this);" data-toggle="modal" data-target="#myModal3" class="btn btn-danger"><i class="fa fa-trash fa-fw"></i></button>';		
 				panel += '</li>';
-				divF99030.append(panel);
+				divF99074.append(panel);
 			}else{
 				var panel = '';
 				panel += '<li class="list-group-item panel-danger list-group-item-warning">';
 				panel += '<span class="badge danger"> Vence '+ pago +'</span>';
 				panel += '<h4 class="text-uppercase">'+ mes +'</h4>';
 				panel += '<hr />';
-				panel += '<button value='+ value.id +' onclick="ShowF99030(this);" data-toggle="modal" data-target="#myModal2" class="btn btn-warning"><i class="fa fa-pencil-square fa-fw"></i></button> ';
-				panel += ' <button value='+ value.id +' onclick="ShowF99030Delete(this);" data-toggle="modal" data-target="#myModal3" class="btn btn-danger"><i class="fa fa-trash fa-fw"></i></button>';		
+				panel += '<button value='+ value.id +' onclick="ShowF99074(this);" data-toggle="modal" data-target="#myModal2" class="btn btn-warning"><i class="fa fa-pencil-square fa-fw"></i></button> ';
+				panel += ' <button value='+ value.id +' onclick="ShowF99074Delete(this);" data-toggle="modal" data-target="#myModal3" class="btn btn-danger"><i class="fa fa-trash fa-fw"></i></button>';		
 				panel += '</li>';
-				divF99030.append(panel);
+				divF99074.append(panel);
 			}	
 			total = parseFloat(total) + parseFloat(value.monto);
 			
@@ -137,9 +137,9 @@ function ListF99030()
 /*
  *	*************** EDIT ***************
  */
-function ShowF99030(boton)
+function ShowF99074(boton)
 {
-	var route = 'http://notes.dev/iva99030s/'+ boton.value +'/edit';
+	var route = 'http://notes.dev/islr99074s/'+ boton.value +'/edit';
 	$.get(route, function(respuesta)
 	{
 		$('#periodoEdit').val(respuesta.periodo);
@@ -150,7 +150,7 @@ function ShowF99030(boton)
 		$('#id').val(respuesta.id);
 	});
 }
-$('#edit-f99030').click(function()
+$('#edit-f99074').click(function()
 {
 	var id = $('#id').val();
 	var periodo = $('#periodoEdit').val();
@@ -159,7 +159,7 @@ $('#edit-f99030').click(function()
 	var monto =	$('#montoEdit').val();
 	var fecha_pago = $('#fechaPagoEdit').val();
 	var updateUser = $('#updateUser').val();
-	var route = 'http://notes.dev/iva99030s/'+id+'';
+	var route = 'http://notes.dev/islr99074s/'+id+'';
 	var token = $('#token').val();
 
 	$.ajax({
@@ -179,7 +179,7 @@ $('#edit-f99030').click(function()
 				successMessage += '<button type="button" class="close" data-dismiss="alert">&times;</button>';
 				successMessage += '<p><i class="fa fa-refresh fa-fw"></i> ' + data.message + '</p>';
 				successMessage += '</div>';
-				ListF99030();
+				ListF99074();
 				$('#myModal2').modal('hide');
 				$('.success').show().html(successMessage);
 			}
@@ -189,9 +189,9 @@ $('#edit-f99030').click(function()
 /*
  *	*************** DELETE ***************
  */
-function ShowF99030Delete(boton)
+function ShowF99074Delete(boton)
 {
-	var route = 'http://notes.dev/iva99030s/'+ boton.value + '/edit';
+	var route = 'http://notes.dev/islr99074s/'+ boton.value + '/edit';
 	$.get(route, function(respuesta)
 	{
 		var periodo = respuesta.periodo;
@@ -200,10 +200,10 @@ function ShowF99030Delete(boton)
 		$('#id').val(respuesta.id);
 	});
 }
-$('#delete-f99030').click(function()
+$('#delete-f99074').click(function()
 {
 	var id = $('#id').val();	
-	var route = 'http://notes.dev/iva99030s/'+id+'';
+	var route = 'http://notes.dev/islr99074s/'+id+'';
 	var token = $('#token').val();
 
 	$.ajax({
@@ -222,7 +222,7 @@ $('#delete-f99030').click(function()
 				successMessage += '<button type="button" class="close" data-dismiss="alert">&times;</button>';
 				successMessage += '<p><i class="fa fa-close fa-fw"></i> ' + data.message + '</p>';
 				successMessage += '</div>';
-				ListF99030();
+				ListF99074();
 				$('#myModal3').modal('hide');
 				$('.success').show().html(successMessage);
 			}

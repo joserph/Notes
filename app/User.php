@@ -86,4 +86,14 @@ class User extends Model implements AuthenticatableContract,
     {
         return $this->hasMany('App\Iva99030', 'id_user');
     }
+
+    public function islr99074s()
+    {
+        return $this->hasMany('App\Islr99074', 'id_user');
+    }
+
+    public function islr99228s()
+    {
+        return $this->hasMany('App\Islr99228', 'id_user');
+    }
 }
