@@ -1,6 +1,6 @@
 @extends('template.layout')
 
-@section('title') Panel de Administración | App notes @stop
+@section('title') Notas | App notes @stop
 
 @section('content')
 	<div class="success"></div>

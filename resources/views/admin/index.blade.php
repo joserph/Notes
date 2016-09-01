@@ -1,6 +1,6 @@
 @extends('template.layout')
 
-@section('title', 'Auth System') 
+@section('title') Panel de Administración | App Notes @endsection 
 
 @section('content')
     <h1 class="page-header"><i class="fa fa-cogs fa-fw"></i> Panel de administración</h1>

@@ -1,6 +1,6 @@
 @extends('template.layout')
 
-@section('title') Panel de Administración | Auth System @stop
+@section('title') Usuarios | App Notes @endsection
 
 @section('content')
     <!-- Page Heading -->
